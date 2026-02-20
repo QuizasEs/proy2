@@ -41,7 +41,13 @@
             <!---------------------------------------------Cuerpo principal--------------------------------------------------->
             <div class="main-content">
                 <!--------------------------------------------- contenido de platillas y vistas--------------------------------------------------->
-                <?php include_once $vistas; ?>
+                <?php
+                if(file_exists($vistas)){
+                    include_once $vistas;
+                } else {
+                    include_once "./views/content/404-view.php";
+                }
+                ?>
 
 
             </div>
@@ -54,11 +60,7 @@
     <?php
 
     }
-    include_once "inc/logOut.php";
-    include_once "inc/script.php";
 
-
-    include_once "inc/footer.php";
     ?>
 
 
