@@ -1,362 +1,259 @@
-<?php
-/* administrador vista */
-if ( $_SESSION['rol_smp'] == 1 ) { ?>
-    <div class="sidebar">
-        <ul class="sidebar-content">
+    <!-- sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- marca -->
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">
+          <ion-icon name="home-outline"></ion-icon>
+        </div>
+        <span class="sidebar-brand-text">Sistemas<span> Admin</span></span>
+      </div>
 
-            <!-- DASHBOARD -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="speedometer"></ion-icon>
-                        <span>Dashboard</span>
-                    </div>
-                </div>
-            </li>
+      <!-- navegacion -->
+      <nav class="sidebar-nav">
+        <!-- principal -->
+        <div class="sidebar-section-label">Principal</div>
 
-            <!-- CAJA -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cash"></ion-icon>
-                        <span>Caja</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Apertura</a></li>
-                    <li class="sub-link"><a href="#">Movimientos</a></li>
-                    <li class="sub-link"><a href="#">Arqueo</a></li>
-                    <li class="sub-link"><a href="#">Cierre diario</a></li>
-                </ul>
-            </li>
+        <!-- dashboard -->
+        <a class="sb-row sidebar-item is-active" data-tip="Dashboard" href="index.php?views=dashboard" onclick="
+              activateItem(this);
+            ">
+          <ion-icon name="grid-outline" class="sb-icon"></ion-icon>
+          <span class="sb-label">Dashboard</span>
+        </a>
 
-            <!-- VENTAS -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cart"></ion-icon>
-                        <span>Ventas</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Nueva venta</a></li>
-                    <li class="sub-link"><a href="#">Buscar producto</a></li>
-                    <li class="sub-link"><a href="#">Detalle de ticket</a></li>
-                    <li class="sub-link"><a href="#">Historial de ventas</a></li>
-                    <li class="sub-link"><a href="#">Ventas por cliente</a></li>
-                    <li class="sub-link"><a href="#">Ventas por doctor</a></li>
-                </ul>
-            </li>
+        <!-- Servicios -->
+        <div class="sidebar-group" data-group="analytics">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="bar-chart-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Servicios</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Lista</span>
+            <a class="sidebar-subitem" href="index.php?views=servicios" onclick="
+                  activateItem(this);
+                ">
+              <ion-icon name="analytics-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Lista</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="git-branch-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Tráfico</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="repeat-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Conversiones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="funnel-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Embudos</span>
+            </a>
+          </div>
+        </div>
 
-            <!-- CLIENTES -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="people"></ion-icon>
-                        <span>Clientes</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Registrar cliente</a></li>
-                    <li class="sub-link"><a href="#">Editar cliente</a></li>
-                    <li class="sub-link"><a href="#">Historial de compras</a></li>
-                </ul>
-            </li>
+        <!-- empresas -->
+        <div class="sidebar-group" data-group="rendimiento">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="pulse-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Empresas</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Lista</span>
+            <a class="sidebar-subitem" href="index.php?views=empresas" onclick="
+                  activateItem(this);
+                ">
+              <ion-icon name="radio-button-on-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Lista</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="server-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Servidor</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="database-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Base de datos</span>
+            </a>
+          </div>
+        </div>
 
-            <!-- INVENTARIO -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cube"></ion-icon>
-                        <span>Inventario</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Medicamentos</a></li>
-                    <li class="sub-link"><a href="#">Lotes y vencimientos</a></li>
-                    <li class="sub-link"><a href="#">Movimientos de stock</a></li>
-                    <li class="sub-link"><a href="#">Categorías</a></li>
-                    <li class="sub-link"><a href="#">Proveedores</a></li>
-                </ul>
-            </li>
+        <!-- gestion -->
+        <div class="sidebar-section-label">Gestion planes</div>
 
-            <!-- COMPRAS -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="briefcase"></ion-icon>
-                        <span>Compras</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Registrar compra</a></li>
-                    <li class="sub-link"><a href="#">Historial de compras</a></li>
-                    <li class="sub-link"><a href="#">Recepción de productos</a></li>
-                    <li class="sub-link"><a href="#">Gestión de proveedores</a></li>
-                </ul>
-            </li>
-
-            <!-- USUARIOS -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="contacts"></ion-icon>
-                        <span>Usuarios</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Registrar usuario</a></li>
-                    <li class="sub-link"><a href="#">Editar usuario</a></li>
-                    <li class="sub-link"><a href="#">Roles y permisos</a></li>
-                    <li class="sub-link"><a href="#">Actividad del usuario</a></li>
-                </ul>
-            </li>
-
-            <!-- REPORTES -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="stats"></ion-icon>
-                        <span>Reportes</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Ventas</a></li>
-                    <li class="sub-link"><a href="#">Stock</a></li>
-                    <li class="sub-link"><a href="#">Finanzas</a></li>
-                    <li class="sub-link"><a href="#">Empleados</a></li>
-                    <li class="sub-link"><a href="#">Auditorías</a></li>
-                </ul>
-            </li>
-
-            <!-- ALERTAS -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="notifications"></ion-icon>
-                        <span>Alertas</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Vencimientos</a></li>
-                    <li class="sub-link"><a href="#">Stock mínimo</a></li>
-                    <li class="sub-link"><a href="#">Pendientes</a></li>
-                    <li class="sub-link"><a href="#">Errores del sistema</a></li>
-                </ul>
-            </li>
-
-            <!-- AUDITORIA -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="document"></ion-icon>
-                        <span>Auditoría</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Acciones de usuario</a></li>
-                    <li class="sub-link"><a href="#">Modificaciones BD</a></li>
-                    <li class="sub-link"><a href="#">Inicios de sesión</a></li>
-                    <li class="sub-link"><a href="#">Eliminaciones</a></li>
-                </ul>
-            </li>
-
-            <!-- CONFIGURACIÓN -->
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="settings"></ion-icon>
-                        <span>Configuración</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Datos de empresa</a></li>
-                    <li class="sub-link"><a href="#">Impuestos y moneda</a></li>
-                    <li class="sub-link"><a href="#">Opciones de impresión</a></li>
-                    <li class="sub-link"><a href="#">Backup</a></li>
-                    <li class="sub-link"><a href="#">Seguridad</a></li>
-                </ul>
-            </li>
-
-        </ul>
-    </div>
+        <!-- usuarios -->
+        <div class="sidebar-group" data-group="usuarios">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="people-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Usuarios</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Usuarios</span>
+            <a class="sidebar-subitem" href="index.php?views=clientes" onclick="
+                  activateItem(this);
+                ">
+              <ion-icon name="list-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Lista de usuarios</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="key-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Roles y permisos</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="albums-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Grupos</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="time-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Actividad</span>
+            </a>
+          </div>
+        </div>
 
 
 
-    <!-- gerente vista -->
-<?php } elseif ( $_SESSION['rol_smp'] == 2 ) { ?>
-
-    <div class="sidebar">
-        <ul class="sidebar-content">
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="speedometer"></ion-icon>
-                        <a href="#">Dashboard</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cart"></ion-icon>
-                        <span>Ventas</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Nueva venta</a></li>
-                    <li class="sub-link"><a href="#">Historial de ventas</a></li>
-                    <li class="sub-link"><a href="#">Ventas por cliente</a></li>
-                    <li class="sub-link"><a href="#">Ventas por doctor</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cube"></ion-icon>
-                        <span>Inventario</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Medicamentos</a></li>
-                    <li class="sub-link"><a href="#">Lotes y vencimientos</a></li>
-                    <li class="sub-link"><a href="#">Movimientos de stock</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="briefcase"></ion-icon>
-                        <span>Compras</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Registrar compra</a></li>
-                    <li class="sub-link"><a href="#">Proveedores</a></li>
-                    <li class="sub-link"><a href="#">Historial de compras</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="stats"></ion-icon>
-                        <span>Reportes</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Reporte de ventas</a></li>
-                    <li class="sub-link"><a href="#">Reporte de stock</a></li>
-                    <li class="sub-link"><a href="#">Reporte de finanzas</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="notifications"></ion-icon>
-                        <a href="#">Alertas</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-
-    <!-- usuario caja vista -->
-<?php } elseif ( $_SESSION['rol_smp'] == 3 ) { ?>
-
-    <div class="sidebar">
-        <ul class="sidebar-content">
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="home"></ion-icon>
-                        <a href="#">Inicio</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cash"></ion-icon>
-                        <span>Caja</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Apertura de caja</a></li>
-                    <li class="sub-link"><a href="#">Movimientos</a></li>
-                    <li class="sub-link"><a href="#">Arqueo</a></li>
-                    <li class="sub-link"><a href="#">Cierre diario</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="cart"></ion-icon>
-                        <span>Ventas</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Nueva venta</a></li>
-                    <li class="sub-link"><a href="#">Buscar producto</a></li>
-                    <li class="sub-link"><a href="#">Detalle de ticket</a></li>
-                    <li class="sub-link"><a href="#">Historial de ventas</a></li>
-                </ul>
-            </li>
-
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="people"></ion-icon>
-                        <span>Clientes</span>
-                    </div>
-                    <ion-icon name="arrow-dropdown"></ion-icon>
-                </div>
-                <ul class="sub-links">
-                    <li class="sub-link"><a href="#">Registrar cliente</a></li>
-                    <li class="sub-link"><a href="#">Editar cliente</a></li>
-                    <li class="sub-link"><a href="#">Historial de compras</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+        <!-- reportes -->
+        <div class="sidebar-group" data-group="reportes">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="document-text-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Reportes</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Reportes</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="today-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Resumen diario</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="cash-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Financiero</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="archive-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Inventario</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="download-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Exportar datos</span>
+            </a>
+          </div>
+        </div>
 
 
 
-    <!-- nada -->
-<?php } else { ?>
-    <div class="sidebar">
-        <ul class="sidebar-content">
-            <li class="link">
-                <div class="menu-item">
-                    <div class="item-link">
-                        <ion-icon name="home"></ion-icon>
-                        <a href="#">salir</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-<?php } ?>
+
+
+        <!-- sistema -->
+        <div class="sidebar-section-label">Sistema</div>
+
+        <!-- configuracion -->
+        <div class="sidebar-group" data-group="config">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="settings-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Configuración</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Configuración</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="options-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">General</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="color-palette-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Apariencia</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="notifications-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Notificaciones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="extension-puzzle-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Integraciones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="code-slash-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">API & Webhooks</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- ayuda -->
+        <a class="sb-row sidebar-item" data-tip="Ayuda" href="#" onclick="
+              activateItem(this);
+              return false;
+            ">
+          <ion-icon name="help-circle-outline" class="sb-icon"></ion-icon>
+          <span class="sb-label">Ayuda</span>
+        </a>
+      </nav>
+
+      <!-- pie -->
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-avatar" onclick="
+              showToast('info', 'usuario', 'usuario')
+            ">
+          AJ
+        </div>
+        <div class="sidebar-footer-info">
+          <div class="sidebar-footer-name">Admin</div>
+          <div class="sidebar-footer-role">Rol Admin</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- overlay mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>

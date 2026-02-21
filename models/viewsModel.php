@@ -4,9 +4,12 @@
         /* -------------------------------------------Obtener vistas-------------------------------------------------- */
         protected static function get_views_model($vistas){
             $listaBlanca=[
-                "dashboard","registroUsuario",
-                "categoriaLista","laboratorioLista",
-                "presentacionLista","usuarioLista"
+                "dashboard",
+                "clientes",
+                "servicios",
+                "habilitaciones",
+                "perfil",
+                "empresas",
             ];
 
             if(in_array($vistas,$listaBlanca)){

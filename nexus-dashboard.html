@@ -1,0 +1,4538 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<script>
+  // Aplica el tema ANTES de que el navegador pinte — evita parpadeo
+  try {
+    var t = localStorage.getItem("nexus-theme");
+    if (t) document.documentElement.setAttribute("data-theme", t);
+  } catch (e) { }
+</script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Core — Dashboard Template</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Ion Icons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* =====================================================
+       CSS CUSTOM PROPERTIES — DESIGN TOKENS
+       ===================================================== */
+    :root {
+      /* --- Brand Blues --- */
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+      --blue-400: #60a5fa;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a8a;
+      --blue-950: #172554;
+
+      /* --- Semantic Colors --- */
+      --color-primary: var(--blue-600);
+      --color-primary-hover: var(--blue-700);
+      --color-primary-active: var(--blue-800);
+      --color-primary-light: var(--blue-50);
+      --color-primary-muted: var(--blue-100);
+
+      --color-success: #10b981;
+      --color-success-bg: #d1fae5;
+      --color-warning: #f59e0b;
+      --color-warning-bg: #fef3c7;
+      --color-danger: #ef4444;
+      --color-danger-bg: #fee2e2;
+      --color-info: #06b6d4;
+      --color-info-bg: #cffafe;
+      --color-purple: #8b5cf6;
+      --color-purple-bg: #ede9fe;
+
+      /* --- Neutrals (Light Theme) --- */
+      --color-bg: #f0f4f8;
+      --color-surface: #ffffff;
+      --color-surface-2: #f8fafc;
+      --color-surface-3: #f1f5f9;
+      --color-border: #e2e8f0;
+      --color-border-strong: #cbd5e1;
+      --color-text: #0f172a;
+      --color-text-secondary: #475569;
+      --color-text-muted: #94a3b8;
+      --color-text-invert: #ffffff;
+
+      /* --- Sidebar --- */
+      --sidebar-bg: var(--blue-950);
+      --sidebar-text: #bfdbfe;
+      --sidebar-text-muted: #60a5fa;
+      --sidebar-active-bg: var(--blue-700);
+      --sidebar-active-text: #ffffff;
+      --sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+      --sidebar-width: 200px;
+      --sidebar-collapsed: 56px;
+
+      /* --- Navbar --- */
+      --navbar-bg: var(--color-surface);
+      --navbar-border: var(--color-border);
+      --navbar-height: 52px;
+
+      /* --- Typography Scale --- */
+      --text-xs: 0.7rem;
+      /* 11.2px */
+      --text-sm: 0.8125rem;
+      /* 13px */
+      --text-base: 0.9375rem;
+      /* 15px */
+      --text-md: 1rem;
+      /* 16px */
+      --text-lg: 1.125rem;
+      /* 18px */
+      --text-xl: 1.375rem;
+      /* 22px */
+      --text-2xl: 1.75rem;
+      /* 28px */
+      --text-3xl: 2.25rem;
+      /* 36px */
+      --text-4xl: 3rem;
+      /* 48px */
+
+      /* --- Font Weights --- */
+      --fw-light: 300;
+      --fw-regular: 400;
+      --fw-medium: 500;
+      --fw-semi: 600;
+      --fw-bold: 700;
+
+      /* --- Spacing Scale --- */
+      --space-1: 0.2rem;
+      --space-2: 0.375rem;
+      --space-3: 0.5rem;
+      --space-4: 0.75rem;
+      --space-5: 1rem;
+      --space-6: 1.125rem;
+      --space-8: 1.5rem;
+      --space-10: 2rem;
+      --space-12: 2.25rem;
+      --space-16: 3rem;
+
+      /* --- Border Radius --- */
+      --radius-sm: 2px;
+      --radius-md: 3px;
+      --radius-lg: 4px;
+      --radius-xl: 4px;
+      --radius-2xl: 4px;
+      --radius-full: 3px;
+
+      /* --- Shadows --- */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-sm:
+        0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md:
+        0 4px 6px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+      --shadow-lg:
+        0 10px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+      --shadow-xl:
+        0 20px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+      --shadow-blue: 0 4px 20px rgba(37, 99, 235, 0.25);
+
+      /* --- Transitions --- */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* --- Z-Index --- */
+      --z-sidebar: 100;
+      --z-navbar: 200;
+      --z-overlay: 300;
+      --z-modal: 400;
+      --z-toast: 500;
+    }
+
+    /* =====================================================
+       DARK THEME
+       ===================================================== */
+    [data-theme="dark"] {
+      --color-bg: #080f1e;
+      --color-surface: #0d1829;
+      --color-surface-2: #111f36;
+      --color-surface-3: #162440;
+      --color-border: #1e3055;
+      --color-border-strong: #2a4272;
+      --color-text: #e2e8f0;
+      --color-text-secondary: #94a3b8;
+      --color-text-muted: #475569;
+      --color-text-invert: #0f172a;
+
+      --navbar-bg: #0d1829;
+      --navbar-border: #1e3055;
+
+      --sidebar-bg: #060d1a;
+      --sidebar-active-bg: var(--blue-700);
+
+      --color-primary-light: rgba(37, 99, 235, 0.15);
+      --color-primary-muted: rgba(37, 99, 235, 0.2);
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+      --shadow-lg:
+        0 10px 24px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+      --shadow-xl:
+        0 20px 48px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+
+      --color-success-bg: rgba(16, 185, 129, 0.15);
+      --color-warning-bg: rgba(245, 158, 11, 0.15);
+      --color-danger-bg: rgba(239, 68, 68, 0.15);
+      --color-info-bg: rgba(6, 182, 212, 0.15);
+      --color-purple-bg: rgba(139, 92, 246, 0.15);
+    }
+
+    /* =====================================================
+       BASE / RESET
+       ===================================================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Sora", sans-serif;
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      margin: 0;
+      line-height: 1.6;
+      transition:
+        background var(--transition-base),
+        color var(--transition-base);
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--color-primary-hover);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-border-strong);
+      border-radius: var(--radius-full);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-text-muted);
+    }
+
+    /* =====================================================
+       LAYOUT SHELL
+       ===================================================== */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* =====================================================
+       SIDEBAR
+       ===================================================== */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: var(--z-sidebar);
+      transition:
+        width var(--transition-slow),
+        transform var(--transition-slow);
+      overflow: hidden;
+    }
+
+    /* ── Estados del sidebar ──────────────────────────── */
+    /* Desktop colapsado (solo íconos) */
+    .sidebar.is-collapsed {
+      width: var(--sidebar-collapsed);
+    }
+
+    /* Mobile: oculto fuera de pantalla por defecto        */
+    @media (max-width: 991.98px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width) !important;
+      }
+
+      .sidebar.is-open {
+        transform: translateX(0);
+      }
+    }
+
+    /* ── Brand ─────────────────────────────────────────── */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 0 var(--space-4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      height: var(--navbar-height);
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-blue);
+    }
+
+    .sidebar-brand-icon ion-icon {
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .sidebar-brand-text {
+      font-size: var(--text-md);
+      font-weight: var(--fw-bold);
+      color: #fff;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      transition:
+        opacity var(--transition-base),
+        transform var(--transition-base);
+    }
+
+    .sidebar-brand-text span {
+      color: var(--blue-400);
+    }
+
+    .sidebar.is-collapsed .sidebar-brand-text {
+      opacity: 0;
+      transform: translateX(-8px);
+      pointer-events: none;
+    }
+
+    /* ── Nav ────────────────────────────────────────────── */
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: var(--space-2) 0;
+    }
+
+    .sidebar-nav::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ── Section label ─────────────────────────────────── */
+    .sidebar-section-label {
+      font-size: 10px;
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(96, 165, 250, 0.45);
+      padding: var(--space-3) var(--space-4) var(--space-1);
+      white-space: nowrap;
+      transition:
+        opacity var(--transition-base),
+        max-height var(--transition-slow),
+        padding var(--transition-slow);
+      max-height: 36px;
+      overflow: hidden;
+    }
+
+    .sidebar.is-collapsed .sidebar-section-label {
+      opacity: 0;
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    /* ── Item base (compartido por .sidebar-item y .sidebar-group-trigger) */
+    .sb-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 7px var(--space-3);
+      margin: 1px var(--space-2);
+      border-radius: var(--radius-md);
+      color: var(--sidebar-text);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      background: none;
+      border: none;
+      width: calc(100% - var(--space-4));
+      text-align: left;
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+      position: relative;
+      font-family: "Sora", sans-serif;
+    }
+
+    .sb-row:hover {
+      background: var(--sidebar-hover-bg);
+      color: #fff;
+    }
+
+    /* ── Simple link ─────────────────────────────────────  */
+    .sidebar-item {}
+
+    /* extends .sb-row */
+    .sidebar-item.is-active {
+      background: var(--sidebar-active-bg);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    /* ── Group trigger ──────────────────────────────────── */
+    .sidebar-group-trigger {}
+
+    /* extends .sb-row */
+    /* Cuando el grupo está abierto */
+    .sidebar-group-trigger.is-open {
+      color: #fff;
+    }
+
+    /* Cuando tiene un hijo activo */
+    .sidebar-group-trigger.has-active {
+      color: var(--blue-300);
+    }
+
+    .sidebar-group-trigger.has-active.is-open {
+      color: #fff;
+    }
+
+    /* ── Íconos y label dentro de .sb-row ──────────────── */
+    .sb-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sb-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition:
+        opacity var(--transition-base),
+        max-width var(--transition-slow);
+      max-width: 200px;
+    }
+
+    .sidebar.is-collapsed .sb-label {
+      opacity: 0;
+      max-width: 0;
+      pointer-events: none;
+    }
+
+    /* ── Chevron ────────────────────────────────────────── */
+    .sb-chevron {
+      font-size: 13px;
+      flex-shrink: 0;
+      color: rgba(96, 165, 250, 0.4);
+      transition:
+        transform var(--transition-base),
+        opacity var(--transition-base),
+        color var(--transition-base);
+      margin-left: auto;
+    }
+
+    .sb-row:hover .sb-chevron {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .sidebar-group-trigger.is-open .sb-chevron {
+      transform: rotate(90deg);
+      color: var(--blue-300);
+    }
+
+    .sidebar.is-collapsed .sb-chevron {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ── Submenu (acordeón expandido) ────────────────────  */
+    .sidebar-submenu {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height 320ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 200ms ease;
+    }
+
+    .sidebar-submenu.is-open {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    /* ── Flyout (modo colapsado) ─────────────────────────  */
+    /* En collapsed, el submenu se convierte en panel flotante */
+    .sidebar.is-collapsed .sidebar-submenu {
+      position: absolute;
+      left: calc(var(--sidebar-collapsed) + 6px);
+      top: 0;
+      width: 210px;
+      background: #0d1f3c;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      z-index: calc(var(--z-sidebar) + 10);
+      /* Oculto */
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      padding: var(--space-1) 0;
+      transition:
+        opacity 180ms ease,
+        max-height 0ms 180ms;
+      /* fade, sin animación de height */
+    }
+
+    .sidebar.is-collapsed .sidebar-submenu.is-open {
+      max-height: 500px;
+      opacity: 1;
+      pointer-events: all;
+      transition: opacity 180ms ease;
+      /* solo fade */
+    }
+
+    /* Título del flyout */
+    .flyout-title {
+      display: none;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(96, 165, 250, 0.5);
+      padding: var(--space-2) var(--space-4) var(--space-1);
+    }
+
+    .sidebar.is-collapsed .flyout-title {
+      display: block;
+    }
+
+    /* ── Subitem ─────────────────────────────────────────  */
+    .sidebar-subitem {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 6px var(--space-4) 6px calc(var(--space-4) + 18px + var(--space-3));
+      color: rgba(191, 219, 254, 0.6);
+      font-size: var(--text-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-decoration: none;
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+      position: relative;
+    }
+
+    /* Línea guía vertical */
+    .sidebar-subitem::before {
+      content: "";
+      position: absolute;
+      left: calc(var(--space-4) + 8px);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(96, 165, 250, 0.15);
+      transition: background var(--transition-fast);
+    }
+
+    .sidebar-subitem:hover {
+      background: var(--sidebar-hover-bg);
+      color: #fff;
+    }
+
+    .sidebar-subitem:hover::before {
+      background: rgba(96, 165, 250, 0.4);
+    }
+
+    .sidebar-subitem.is-active {
+      color: var(--blue-300);
+    }
+
+    .sidebar-subitem.is-active::before {
+      background: var(--color-primary);
+    }
+
+    .sidebar-subitem .sb-icon {
+      font-size: 13px;
+    }
+
+    .sidebar-subitem .sb-label {
+      opacity: 1;
+      max-width: none;
+    }
+
+    /* En flyout: reset padding */
+    .sidebar.is-collapsed .sidebar-subitem {
+      padding: 7px var(--space-4);
+    }
+
+    .sidebar.is-collapsed .sidebar-subitem::before {
+      display: none;
+    }
+
+    /* ── Tooltip (collapsed, solo en items sin flyout) ──── */
+    .sidebar.is-collapsed .sidebar-item[data-tip]:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: calc(var(--sidebar-collapsed) - var(--space-2) + 2px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: #0d1f3c;
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      color: #fff;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-medium);
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      white-space: nowrap;
+      z-index: calc(var(--z-sidebar) + 20);
+      pointer-events: none;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    .sidebar-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      color: #fff;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .sidebar-footer-info {
+      flex: 1;
+      overflow: hidden;
+      transition:
+        opacity var(--transition-base),
+        max-width var(--transition-slow);
+      max-width: 200px;
+    }
+
+    .sidebar-footer-name {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-semi);
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-footer-role {
+      font-size: var(--text-xs);
+      color: var(--blue-400);
+    }
+
+    .sidebar.is-collapsed .sidebar-footer-info {
+      opacity: 0;
+      max-width: 0;
+    }
+
+    /* ── Overlay (mobile) ───────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: calc(var(--z-sidebar) - 1);
+      backdrop-filter: blur(3px);
+    }
+
+    .sidebar-overlay.is-visible {
+      display: block;
+    }
+
+    /* =====================================================
+       MAIN CONTENT
+       ===================================================== */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: margin-left var(--transition-slow);
+    }
+
+    .main-content.collapsed {
+      margin-left: var(--sidebar-collapsed);
+    }
+
+    /* =====================================================
+       NAVBAR
+       ===================================================== */
+    .navbar-top {
+      height: var(--navbar-height);
+      background: var(--navbar-bg);
+      border-bottom: 1px solid var(--navbar-border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-5);
+      gap: var(--space-3);
+      position: sticky;
+      top: 0;
+      z-index: var(--z-navbar);
+      box-shadow: var(--shadow-xs);
+      transition:
+        background var(--transition-base),
+        border-color var(--transition-base);
+    }
+
+    .navbar-search {
+      flex: 1;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .navbar-search ion-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .navbar-search input {
+      width: 100%;
+      height: 38px;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      padding: 0 var(--space-4) 0 38px;
+      font-size: var(--text-sm);
+      font-family: "Sora", sans-serif;
+      color: var(--color-text);
+      outline: none;
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .navbar-search input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .navbar-search input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-left: auto;
+    }
+
+    .navbar-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--color-surface-2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      position: relative;
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .navbar-btn:hover {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    .navbar-btn ion-icon {
+      font-size: 18px;
+    }
+
+    .navbar-notif-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--color-danger);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--navbar-bg);
+    }
+
+    .navbar-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 0 2px var(--color-primary);
+    }
+
+    .navbar-user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar-user-name {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-semi);
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    .navbar-user-role {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.2;
+    }
+
+    /* Botón sidebar en navbar — siempre visible */
+    .navbar-sidebar-btn {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: var(--color-surface-2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .navbar-sidebar-btn:hover {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    .navbar-sidebar-btn ion-icon {
+      font-size: 20px;
+    }
+
+    /* =====================================================
+       PAGE CONTENT
+       ===================================================== */
+    .page-content {
+      padding: var(--space-5);
+      flex: 1;
+    }
+
+    /* =====================================================
+       TYPOGRAPHY
+       ===================================================== */
+    .page-title {
+      font-size: var(--text-xl);
+      font-weight: var(--fw-bold);
+      color: var(--color-text);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .page-subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: var(--space-1) 0 0;
+    }
+
+    .section-title {
+      font-size: var(--text-lg);
+      font-weight: var(--fw-semi);
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+      margin: 0 0 var(--space-4);
+    }
+
+    .card-title {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-semi);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 var(--space-2);
+    }
+
+    .label {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semi);
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+
+    .text-body {
+      font-size: var(--text-base);
+      color: var(--color-text);
+    }
+
+    .text-secondary {
+      color: var(--color-text-secondary);
+    }
+
+    .text-muted {
+      color: var(--color-text-muted);
+    }
+
+    .text-mono {
+      font-family: "DM Mono", monospace;
+    }
+
+    /* =====================================================
+       CARDS
+       ===================================================== */
+    .card-nx {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      transition:
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .card-nx:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-body-nx {
+      padding: var(--space-4);
+    }
+
+    .card-header-nx {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Stat Cards */
+    .stat-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      transition:
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .stat-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-icon ion-icon {
+      font-size: 18px;
+    }
+
+    .stat-icon.blue {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    .stat-icon.green {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .stat-icon.amber {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .stat-icon.red {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+
+    .stat-icon.purple {
+      background: var(--color-purple-bg);
+      color: var(--color-purple);
+    }
+
+    .stat-icon.cyan {
+      background: var(--color-info-bg);
+      color: var(--color-info);
+    }
+
+    .stat-value {
+      font-size: var(--text-xl);
+      font-weight: var(--fw-bold);
+      color: var(--color-text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-weight: var(--fw-medium);
+    }
+
+    .stat-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semi);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .stat-delta.up {
+      color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+
+    .stat-delta.down {
+      color: var(--color-danger);
+      background: var(--color-danger-bg);
+    }
+
+    .stat-delta ion-icon {
+      font-size: 12px;
+    }
+
+    /* Sparkline placeholder */
+    .sparkline {
+      height: 48px;
+      background: linear-gradient(to right,
+          transparent,
+          var(--color-primary-muted));
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sparkline::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
+    .btn-nx {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: "Sora", sans-serif;
+      font-weight: var(--fw-semi);
+      font-size: var(--text-sm);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-nx ion-icon {
+      font-size: 16px;
+    }
+
+    /* Sizes */
+    .btn-xs {
+      padding: 4px 10px;
+      font-size: var(--text-xs);
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: var(--text-sm);
+    }
+
+    .btn-md {
+      padding: 10px 20px;
+      font-size: var(--text-sm);
+    }
+
+    .btn-lg {
+      padding: 13px 28px;
+      font-size: var(--text-base);
+      border-radius: var(--radius-lg);
+    }
+
+    .btn-xl {
+      padding: 16px 36px;
+      font-size: var(--text-md);
+      border-radius: var(--radius-lg);
+    }
+
+    /* Variants */
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+      box-shadow: var(--shadow-blue);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      background: var(--color-primary-active);
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--color-surface-2);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-surface-3);
+      border-color: var(--color-border-strong);
+    }
+
+    .btn-success {
+      background: var(--color-success);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: var(--color-danger);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .btn-warning {
+      background: var(--color-warning);
+      color: #fff;
+    }
+
+    .btn-warning:hover {
+      background: #d97706;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--color-primary-light);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover {
+      background: var(--color-surface-3);
+      color: var(--color-text);
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      justify-content: center;
+      border-radius: var(--radius-md);
+    }
+
+    .btn-icon.btn-sm {
+      width: 30px;
+      height: 30px;
+    }
+
+    .btn-icon.btn-lg {
+      width: 44px;
+      height: 44px;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-md) !important;
+    }
+
+    /* =====================================================
+       BADGES
+       ===================================================== */
+    .badge-nx {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semi);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .badge-nx ion-icon {
+      font-size: 10px;
+    }
+
+    .badge-blue {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    .badge-green {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .badge-amber {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .badge-red {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+
+    .badge-purple {
+      background: var(--color-purple-bg);
+      color: var(--color-purple);
+    }
+
+    .badge-cyan {
+      background: var(--color-info-bg);
+      color: var(--color-info);
+    }
+
+    .badge-neutral {
+      background: var(--color-surface-3);
+      color: var(--color-text-secondary);
+    }
+
+    /* Priority badges */
+    .priority-high {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .priority-med {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .priority-low {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* =====================================================
+       TABLE
+       ===================================================== */
+
+    /* Wrapper obligatorio — scroll horizontal limpio */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Barra de scroll discreta */
+    .table-wrapper::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--color-surface-2);
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--color-border-strong);
+      border-radius: 2px;
+    }
+
+    .table-nx {
+      width: 100%;
+      min-width: 640px;
+      /* evita colapso extremo */
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      table-layout: fixed;
+      /* distribución controlada */
+    }
+
+    /* Anchos de columna fijos */
+    .table-nx .col-check {
+      width: 40px;
+    }
+
+    .table-nx .col-id {
+      width: 72px;
+    }
+
+    .table-nx .col-entity {
+      width: auto;
+      min-width: 140px;
+    }
+
+    /* flexible — absorbe espacio */
+    .table-nx .col-priority {
+      width: 80px;
+    }
+
+    .table-nx .col-status {
+      width: 110px;
+    }
+
+    .table-nx .col-tags {
+      width: 90px;
+    }
+
+    .table-nx .col-value {
+      width: 90px;
+    }
+
+    .table-nx .col-actions {
+      width: 100px;
+    }
+
+    .table-nx thead th {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semi);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+      overflow: hidden;
+      background: var(--color-surface);
+      /* fija cabecera visualmente */
+    }
+
+    .table-nx thead th.col-actions {
+      text-align: right;
+    }
+
+    .table-nx tbody td {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text);
+      vertical-align: middle;
+      /* Texto largo: trunca sin romper layout */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 0;
+      /* necesario con table-layout:fixed para que text-overflow funcione */
+    }
+
+    .table-nx tbody tr {
+      transition: background var(--transition-fast);
+    }
+
+    .table-nx tbody tr:hover {
+      background: var(--color-surface-2);
+    }
+
+    .table-nx tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* La columna de acciones nunca trunca */
+    .table-nx td.col-actions {
+      overflow: visible;
+      white-space: nowrap;
+    }
+
+    /* Checkbox */
+    .table-nx input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+
+    /* Celda entidad: flex con truncado en el nombre */
+    .entity-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      min-width: 0;
+      /* esencial para que el hijo trunque */
+    }
+
+    .entity-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: var(--fw-bold);
+      color: #fff;
+      flex-shrink: 0;
+      /* nunca se comprime */
+    }
+
+    .entity-name {
+      font-weight: var(--fw-medium);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    /* Tooltip nativo para texto truncado */
+    .table-nx td[title] {
+      cursor: default;
+    }
+
+    /* =====================================================
+       PAGINATION
+       ===================================================== */
+    .pagination-nx {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .page-btn {
+      min-width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-family: "Sora", sans-serif;
+      font-weight: var(--fw-medium);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      padding: 0 var(--space-2);
+    }
+
+    .page-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+
+    .page-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-blue);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .page-btn ion-icon {
+      font-size: 14px;
+    }
+
+    .pagination-info {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* =====================================================
+       FORMS
+       ===================================================== */
+    .form-group-nx {
+      margin-bottom: var(--space-4);
+    }
+
+    .form-label-nx {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .form-control-nx {
+      width: 100%;
+      height: 36px;
+      background: var(--color-surface-2);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0 var(--space-3);
+      font-size: var(--text-sm);
+      font-family: "Sora", sans-serif;
+      color: var(--color-text);
+      outline: none;
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .form-control-nx::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .form-control-nx:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      background: var(--color-surface);
+    }
+
+    .form-control-nx.is-invalid {
+      border-color: var(--color-danger);
+    }
+
+    .form-control-nx.is-valid {
+      border-color: var(--color-success);
+    }
+
+    textarea.form-control-nx {
+      height: auto;
+      padding: var(--space-3) var(--space-4);
+      resize: vertical;
+    }
+
+    select.form-control-nx {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    .form-hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+
+    .form-error {
+      font-size: var(--text-xs);
+      color: var(--color-danger);
+      margin-top: var(--space-1);
+    }
+
+    /* =====================================================
+       MODAL
+       ===================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: var(--z-modal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-base);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-nx {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 520px;
+      transform: translateY(16px) scale(0.98);
+      transition: transform var(--transition-base);
+    }
+
+    .modal-overlay.open .modal-nx {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header-nx {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-title-nx {
+      font-size: var(--text-md);
+      font-weight: var(--fw-semi);
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+    }
+
+    .modal-close {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: var(--color-surface-3);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      transition: all var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+
+    .modal-body-nx {
+      padding: var(--space-4);
+    }
+
+    .modal-footer-nx {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* =====================================================
+       SECTIONS / CONTAINERS
+       ===================================================== */
+    .section-nx {
+      margin-bottom: var(--space-5);
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .divider-nx {
+      height: 1px;
+      background: var(--color-border);
+      margin: var(--space-4) 0;
+    }
+
+    /* =====================================================
+       FILTER BAR
+       ===================================================== */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .filter-bar select {
+      height: 36px;
+      padding: 0 32px 0 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-size: var(--text-sm);
+      font-family: "Sora", sans-serif;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-color: var(--color-surface);
+      transition: border-color var(--transition-fast);
+    }
+
+    .filter-bar select:focus {
+      border-color: var(--color-primary);
+    }
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+    .progress-nx {
+      height: 6px;
+      background: var(--color-surface-3);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      transition: width var(--transition-slow);
+    }
+
+    .progress-fill.success {
+      background: var(--color-success);
+    }
+
+    .progress-fill.warning {
+      background: var(--color-warning);
+    }
+
+    .progress-fill.danger {
+      background: var(--color-danger);
+    }
+
+    /* =====================================================
+       TOAST NOTIFICATIONS
+       ===================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      z-index: var(--z-toast);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .toast-nx {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      min-width: 300px;
+      max-width: 400px;
+      animation: slideInToast 0.3s ease;
+    }
+
+    @keyframes slideInToast {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toast-nx.success .toast-icon-wrap {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .toast-nx.error .toast-icon-wrap {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+
+    .toast-nx.info .toast-icon-wrap {
+      background: var(--color-info-bg);
+      color: var(--color-info);
+    }
+
+    .toast-nx.warning .toast-icon-wrap {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .toast-nx .toast-icon-wrap ion-icon {
+      font-size: 18px;
+    }
+
+    .toast-title {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-semi);
+      color: var(--color-text);
+    }
+
+    .toast-msg {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* =====================================================
+       TABS
+       ===================================================== */
+    .tabs-nx {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-4);
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--color-text-muted);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .tab-btn ion-icon {
+      font-size: 16px;
+    }
+
+    .tab-btn:hover {
+      color: var(--color-text);
+    }
+
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* =====================================================
+       AVATAR GROUP
+       ===================================================== */
+    .avatar-group {
+      display: flex;
+    }
+
+    .avatar-group .avatar-item {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--color-surface);
+      margin-right: -8px;
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-700));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      color: #fff;
+    }
+
+    .avatar-group .avatar-more {
+      background: var(--color-surface-3);
+      color: var(--color-text-secondary);
+    }
+
+    /* =====================================================
+       CHART PLACEHOLDER
+       ===================================================== */
+    .chart-placeholder {
+      height: 200px;
+      background: linear-gradient(180deg,
+          var(--color-primary-muted) 0%,
+          transparent 100%);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-placeholder::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg,
+          var(--blue-400),
+          var(--blue-600),
+          var(--blue-400));
+      animation: chartPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes chartPulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* Mini sparkline SVG style */
+    .sparkline-svg {
+      width: 100%;
+      height: 48px;
+    }
+
+    /* =====================================================
+       DROPDOWN
+       ===================================================== */
+    .dropdown-nx {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu-nx {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      min-width: 180px;
+      z-index: var(--z-overlay);
+      padding: var(--space-2);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: all var(--transition-base);
+    }
+
+    .dropdown-nx.open .dropdown-menu-nx {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .dropdown-item-nx {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .dropdown-item-nx:hover {
+      background: var(--color-surface-2);
+    }
+
+    .dropdown-item-nx ion-icon {
+      font-size: 16px;
+      color: var(--color-text-muted);
+    }
+
+    .dropdown-item-nx.danger {
+      color: var(--color-danger);
+    }
+
+    .dropdown-item-nx.danger ion-icon {
+      color: var(--color-danger);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: var(--space-2) 0;
+    }
+
+    /* =====================================================
+       ALERTS
+       ===================================================== */
+    .alert-nx {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border-left: 3px solid;
+    }
+
+    .alert-nx ion-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .alert-nx.info {
+      background: var(--color-info-bg);
+      border-color: var(--color-info);
+      color: var(--color-info);
+    }
+
+    .alert-nx.success {
+      background: var(--color-success-bg);
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+
+    .alert-nx.warning {
+      background: var(--color-warning-bg);
+      border-color: var(--color-warning);
+      color: var(--color-warning);
+    }
+
+    .alert-nx.danger {
+      background: var(--color-danger-bg);
+      border-color: var(--color-danger);
+      color: var(--color-danger);
+    }
+
+    .alert-nx .alert-body {
+      color: var(--color-text);
+    }
+
+    .alert-nx .alert-title {
+      font-weight: var(--fw-semi);
+      font-size: var(--text-sm);
+      margin-bottom: 2px;
+    }
+
+    .alert-nx .alert-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* =====================================================
+       SWITCH / TOGGLE
+       ===================================================== */
+    .switch-nx {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      display: inline-block;
+    }
+
+    .switch-nx input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      background: var(--color-border-strong);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background var(--transition-base);
+    }
+
+    .switch-track::before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: var(--radius-full);
+      transition: transform var(--transition-base);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .switch-nx input:checked+.switch-track {
+      background: var(--color-primary);
+    }
+
+    .switch-nx input:checked+.switch-track::before {
+      transform: translateX(20px);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+    @media (max-width: 991.98px) {
+      .main-content {
+        margin-left: 0 !important;
+      }
+
+      .navbar-user-info {
+        display: none;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .page-content {
+        padding: var(--space-4) var(--space-3);
+      }
+
+      .stat-value {
+        font-size: var(--text-xl);
+      }
+
+      .page-title {
+        font-size: var(--text-xl);
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* =====================================================
+       UTILITY HELPERS
+       ===================================================== */
+    .gap-1 {
+      gap: var(--space-1);
+    }
+
+    .gap-2 {
+      gap: var(--space-2);
+    }
+
+    .gap-3 {
+      gap: var(--space-3);
+    }
+
+    .gap-4 {
+      gap: var(--space-4);
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .mt-auto {
+      margin-top: auto;
+    }
+
+    .ml-auto {
+      margin-left: auto;
+    }
+
+    .rounded-full {
+      border-radius: var(--radius-full);
+    }
+
+    .surface {
+      background: var(--color-surface);
+    }
+
+    .no-wrap {
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       SCROLL ANIMATION
+       ===================================================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    .animate-in:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .animate-in:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .animate-in:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+
+    .animate-in:nth-child(4) {
+      animation-delay: 0.2s;
+    }
+
+    .animate-in:nth-child(5) {
+      animation-delay: 0.25s;
+    }
+
+    .animate-in:nth-child(6) {
+      animation-delay: 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- =====================================================
+     APP SHELL
+     ===================================================== -->
+  <div class="app-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand -->
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">
+          <ion-icon name="planet-outline"></ion-icon>
+        </div>
+        <span class="sidebar-brand-text">Nexus<span> Core</span></span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav">
+        <!-- ══ PRINCIPAL ══ -->
+        <div class="sidebar-section-label">Principal</div>
+
+        <!-- Dashboard — link simple -->
+        <a class="sb-row sidebar-item is-active" data-tip="Dashboard" href="#" onclick="
+              activateItem(this);
+              return false;
+            ">
+          <ion-icon name="grid-outline" class="sb-icon"></ion-icon>
+          <span class="sb-label">Dashboard</span>
+        </a>
+
+        <!-- Analytics — desplegable -->
+        <div class="sidebar-group" data-group="analytics">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="bar-chart-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Analytics</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Analytics</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="analytics-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Resumen general</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="git-branch-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Tráfico</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="repeat-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Conversiones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="funnel-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Embudos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Rendimiento — desplegable -->
+        <div class="sidebar-group" data-group="rendimiento">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="pulse-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Rendimiento</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Rendimiento</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="radio-button-on-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Tiempo real</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="server-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Servidor</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="database-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Base de datos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ══ GESTIÓN ══ -->
+        <div class="sidebar-section-label">Gestión</div>
+
+        <!-- Usuarios — desplegable -->
+        <div class="sidebar-group" data-group="usuarios">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="people-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Usuarios</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Usuarios</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="list-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Lista de usuarios</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="key-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Roles y permisos</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="albums-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Grupos</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="time-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Actividad</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Transacciones — desplegable -->
+        <div class="sidebar-group" data-group="transacciones">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="swap-horizontal-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Transacciones</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Transacciones</span>
+            <a class="sidebar-subitem is-active" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="layers-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Todas (244)</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="checkmark-circle-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Exitosas</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="hourglass-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Pendientes</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="close-circle-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Fallidas</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="return-down-back-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Reembolsos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Reportes — desplegable -->
+        <div class="sidebar-group" data-group="reportes">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="document-text-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Reportes</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Reportes</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="today-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Resumen diario</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="cash-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Financiero</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="archive-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Inventario</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="download-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Exportar datos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Productos — desplegable -->
+        <div class="sidebar-group" data-group="productos">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="cube-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Productos</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Productos</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="grid-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Catálogo</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="filing-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Inventario</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="pricetag-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Categorías</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="cut-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Descuentos</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Finanzas — desplegable -->
+        <div class="sidebar-group" data-group="finanzas">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="wallet-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Finanzas</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Finanzas</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="bar-chart-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Balance general</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="receipt-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Facturación</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="calculator-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Impuestos</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="card-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Cuentas por pagar</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ══ SISTEMA ══ -->
+        <div class="sidebar-section-label">Sistema</div>
+
+        <!-- Configuración — desplegable -->
+        <div class="sidebar-group" data-group="config">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="settings-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Configuración</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Configuración</span>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="options-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">General</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="color-palette-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Apariencia</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="notifications-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Notificaciones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="extension-puzzle-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Integraciones</span>
+            </a>
+            <a class="sidebar-subitem" href="#" onclick="
+                  activateItem(this);
+                  return false;
+                ">
+              <ion-icon name="code-slash-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">API & Webhooks</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Permisos — link simple -->
+        <a class="sb-row sidebar-item" data-tip="Permisos" href="#" onclick="
+              activateItem(this);
+              return false;
+            ">
+          <ion-icon name="shield-checkmark-outline" class="sb-icon"></ion-icon>
+          <span class="sb-label">Permisos</span>
+        </a>
+
+        <!-- Ayuda — link simple -->
+        <a class="sb-row sidebar-item" data-tip="Ayuda" href="#" onclick="
+              activateItem(this);
+              return false;
+            ">
+          <ion-icon name="help-circle-outline" class="sb-icon"></ion-icon>
+          <span class="sb-label">Ayuda</span>
+        </a>
+      </nav>
+
+      <!-- Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-avatar" onclick="
+              showToast('info', 'Alex Johnson', 'Super Admin — Nexus Core')
+            ">
+          AJ
+        </div>
+        <div class="sidebar-footer-info">
+          <div class="sidebar-footer-name">Alex Johnson</div>
+          <div class="sidebar-footer-role">Super Admin</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main-content" id="mainContent">
+      <!-- ===== NAVBAR ===== -->
+      <header class="navbar-top">
+        <!-- Botón sidebar: colapsa en desktop, abre drawer en mobile -->
+        <button class="navbar-sidebar-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" title="Menú">
+          <ion-icon name="menu-outline" id="sidebarToggleIcon"></ion-icon>
+        </button>
+
+        <div class="navbar-search">
+          <ion-icon name="search-outline"></ion-icon>
+          <input type="text" placeholder="Buscar en el sistema..." />
+        </div>
+
+        <div class="navbar-actions">
+          <button class="navbar-btn" title="Notificaciones" onclick="
+                showToast(
+                  'info',
+                  'Notificaciones',
+                  'No tienes nuevas notificaciones.',
+                )
+              ">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span class="navbar-notif-dot"></span>
+          </button>
+          <button class="navbar-btn" title="Mensajes">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+          </button>
+          <button class="navbar-btn" id="themeToggle" title="Cambiar tema" onclick="toggleTheme()">
+            <ion-icon name="moon-outline" id="themeIcon"></ion-icon>
+          </button>
+          <div style="width: 1px; height: 24px; background: var(--color-border)"></div>
+          <div class="navbar-user-info">
+            <span class="navbar-user-name">Alex Johnson</span>
+            <span class="navbar-user-role">Super Admin</span>
+          </div>
+          <div class="navbar-avatar" onclick="
+                showToast(
+                  'success',
+                  'Perfil',
+                  'Accediendo al perfil de usuario.',
+                )
+              ">
+            AJ
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== PAGE CONTENT ===== -->
+      <div class="page-content">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">
+              Bienvenido de vuelta, Alex — Jueves 19 Feb 2026
+            </p>
+          </div>
+          <div style="display: flex; gap: var(--space-3)">
+            <button class="btn-nx btn-secondary btn-md">
+              <ion-icon name="download-outline"></ion-icon>
+              Exportar
+            </button>
+            <button class="btn-nx btn-primary btn-md" onclick="openModal('modalAdd')">
+              <ion-icon name="add-outline"></ion-icon>
+              Nuevo registro
+            </button>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           STAT CARDS
+           ===================================================== -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+              <div class="stat-card-header">
+                <div>
+                  <div class="card-title">Ventas Totales</div>
+                  <div class="stat-value">$12,450</div>
+                </div>
+                <div class="stat-icon blue">
+                  <ion-icon name="cash-outline"></ion-icon>
+                </div>
+              </div>
+              <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  ">
+                <span class="stat-delta up"><ion-icon name="trending-up-outline"></ion-icon>
+                  +12.5%</span>
+                <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+              </div>
+              <div class="progress-nx">
+                <div class="progress-fill" style="width: 72%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+              <div class="stat-card-header">
+                <div>
+                  <div class="card-title">Nuevos Usuarios</div>
+                  <div class="stat-value">1,205</div>
+                </div>
+                <div class="stat-icon green">
+                  <ion-icon name="people-outline"></ion-icon>
+                </div>
+              </div>
+              <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  ">
+                <span class="stat-delta up"><ion-icon name="trending-up-outline"></ion-icon>
+                  +6.2%</span>
+                <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+              </div>
+              <div class="progress-nx">
+                <div class="progress-fill success" style="width: 61%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+              <div class="stat-card-header">
+                <div>
+                  <div class="card-title">Ingresos</div>
+                  <div class="stat-value">$45,200</div>
+                </div>
+                <div class="stat-icon purple">
+                  <ion-icon name="wallet-outline"></ion-icon>
+                </div>
+              </div>
+              <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  ">
+                <span class="stat-delta up"><ion-icon name="trending-up-outline"></ion-icon>
+                  +8.1%</span>
+                <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+              </div>
+              <div class="progress-nx">
+                <div class="progress-fill" style="width: 85%; background: var(--color-purple)"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+              <div class="stat-card-header">
+                <div>
+                  <div class="card-title">Sesiones</div>
+                  <div class="stat-value">320</div>
+                </div>
+                <div class="stat-icon amber">
+                  <ion-icon name="analytics-outline"></ion-icon>
+                </div>
+              </div>
+              <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  ">
+                <span class="stat-delta down"><ion-icon name="trending-down-outline"></ion-icon>
+                  -2.4%</span>
+                <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+              </div>
+              <div class="progress-nx">
+                <div class="progress-fill warning" style="width: 43%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           CHART + MINI CARDS
+           ===================================================== -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-lg-8">
+            <div class="card-nx animate-in">
+              <div class="card-header-nx">
+                <div>
+                  <h2 class="section-title" style="margin: 0">
+                    Rendimiento del Sistema
+                  </h2>
+                  <p class="text-muted" style="font-size: var(--text-xs); margin: 2px 0 0">
+                    Últimos 7 días
+                  </p>
+                </div>
+                <div style="display: flex; gap: var(--space-2)">
+                  <button class="btn-nx btn-secondary btn-sm">
+                    <ion-icon name="download-outline"></ion-icon> Exportar
+                  </button>
+                  <button class="btn-nx btn-primary btn-sm">
+                    Actualizar
+                  </button>
+                </div>
+              </div>
+              <div class="card-body-nx">
+                <!-- SVG Sparkline Chart -->
+                <svg viewBox="0 0 700 160" class="sparkline-svg" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--blue-500)" stop-opacity="0.25" />
+                      <stop offset="100%" stop-color="var(--blue-500)" stop-opacity="0.0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M0,130 C50,120 80,80 120,70 C160,60 200,90 250,75 C300,60 340,40 390,50 C440,60 470,100 520,90 C560,82 600,60 640,50 L700,40 L700,160 L0,160 Z"
+                    fill="url(#chartGrad)" />
+                  <path
+                    d="M0,130 C50,120 80,80 120,70 C160,60 200,90 250,75 C300,60 340,40 390,50 C440,60 470,100 520,90 C560,82 600,60 640,50 L700,40"
+                    fill="none" stroke="var(--blue-500)" stroke-width="2.5" stroke-linecap="round" />
+                  <!-- Data points -->
+                  <circle cx="0" cy="130" r="4" fill="var(--blue-500)" />
+                  <circle cx="120" cy="70" r="4" fill="var(--blue-500)" />
+                  <circle cx="250" cy="75" r="4" fill="var(--blue-500)" />
+                  <circle cx="390" cy="50" r="4" fill="var(--blue-500)" />
+                  <circle cx="520" cy="90" r="4" fill="var(--blue-500)" />
+                  <circle cx="640" cy="50" r="4" fill="var(--blue-500)" />
+                  <circle cx="700" cy="40" r="4" fill="var(--blue-500)" />
+                  <!-- X Labels -->
+                  <text x="0" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Lun
+                  </text>
+                  <text x="113" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Mar
+                  </text>
+                  <text x="240" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Mié
+                  </text>
+                  <text x="381" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Jue
+                  </text>
+                  <text x="512" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Vie
+                  </text>
+                  <text x="634" y="158" fill="var(--color-text-muted)" font-size="11" font-family="Sora,sans-serif">
+                    Sáb
+                  </text>
+                </svg>
+                <!-- Legend -->
+                <div style="
+                      display: flex;
+                      gap: var(--space-6);
+                      margin-top: var(--space-3);
+                    ">
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        gap: var(--space-2);
+                      ">
+                    <div style="
+                          width: 10px;
+                          height: 10px;
+                          border-radius: 50%;
+                          background: var(--blue-500);
+                        "></div>
+                    <span style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-secondary);
+                        ">Rendimiento</span>
+                  </div>
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        gap: var(--space-2);
+                      ">
+                    <div style="
+                          width: 10px;
+                          height: 10px;
+                          border-radius: 50%;
+                          background: var(--color-success);
+                        "></div>
+                    <span style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-secondary);
+                        ">Disponibilidad</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <!-- Activity card -->
+            <div class="card-nx h-100 animate-in">
+              <div class="card-header-nx">
+                <h2 class="section-title" style="margin: 0">
+                  Actividad Reciente
+                </h2>
+                <button class="btn-nx btn-ghost btn-sm">Ver todo</button>
+              </div>
+              <div class="card-body-nx" style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-3);
+                  ">
+                <div style="
+                      display: flex;
+                      align-items: flex-start;
+                      gap: var(--space-3);
+                    ">
+                  <div class="stat-icon green" style="
+                        width: 36px;
+                        height: 36px;
+                        flex-shrink: 0;
+                        border-radius: var(--radius-md);
+                      ">
+                    <ion-icon name="checkmark-circle-outline" style="font-size: 16px"></ion-icon>
+                  </div>
+                  <div>
+                    <div style="
+                          font-size: var(--text-sm);
+                          font-weight: var(--fw-medium);
+                        ">
+                      Transacción completada
+                    </div>
+                    <div style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-muted);
+                        ">
+                      Sarah Miller · hace 2 min
+                    </div>
+                  </div>
+                </div>
+                <div style="
+                      display: flex;
+                      align-items: flex-start;
+                      gap: var(--space-3);
+                    ">
+                  <div class="stat-icon amber" style="
+                        width: 36px;
+                        height: 36px;
+                        flex-shrink: 0;
+                        border-radius: var(--radius-md);
+                      ">
+                    <ion-icon name="time-outline" style="font-size: 16px"></ion-icon>
+                  </div>
+                  <div>
+                    <div style="
+                          font-size: var(--text-sm);
+                          font-weight: var(--fw-medium);
+                        ">
+                      Pago pendiente
+                    </div>
+                    <div style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-muted);
+                        ">
+                      James Davis · hace 15 min
+                    </div>
+                  </div>
+                </div>
+                <div style="
+                      display: flex;
+                      align-items: flex-start;
+                      gap: var(--space-3);
+                    ">
+                  <div class="stat-icon red" style="
+                        width: 36px;
+                        height: 36px;
+                        flex-shrink: 0;
+                        border-radius: var(--radius-md);
+                      ">
+                    <ion-icon name="close-circle-outline" style="font-size: 16px"></ion-icon>
+                  </div>
+                  <div>
+                    <div style="
+                          font-size: var(--text-sm);
+                          font-weight: var(--fw-medium);
+                        ">
+                      Error en transacción
+                    </div>
+                    <div style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-muted);
+                        ">
+                      Robert Taylor · hace 38 min
+                    </div>
+                  </div>
+                </div>
+                <div style="
+                      display: flex;
+                      align-items: flex-start;
+                      gap: var(--space-3);
+                    ">
+                  <div class="stat-icon blue" style="
+                        width: 36px;
+                        height: 36px;
+                        flex-shrink: 0;
+                        border-radius: var(--radius-md);
+                      ">
+                    <ion-icon name="person-add-outline" style="font-size: 16px"></ion-icon>
+                  </div>
+                  <div>
+                    <div style="
+                          font-size: var(--text-sm);
+                          font-weight: var(--fw-medium);
+                        ">
+                      Nuevo usuario registrado
+                    </div>
+                    <div style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-muted);
+                        ">
+                      Emily Lewis · hace 1 hora
+                    </div>
+                  </div>
+                </div>
+                <div style="
+                      display: flex;
+                      align-items: flex-start;
+                      gap: var(--space-3);
+                    ">
+                  <div class="stat-icon cyan" style="
+                        width: 36px;
+                        height: 36px;
+                        flex-shrink: 0;
+                        border-radius: var(--radius-md);
+                      ">
+                    <ion-icon name="shield-checkmark-outline" style="font-size: 16px"></ion-icon>
+                  </div>
+                  <div>
+                    <div style="
+                          font-size: var(--text-sm);
+                          font-weight: var(--fw-medium);
+                        ">
+                      Permisos actualizados
+                    </div>
+                    <div style="
+                          font-size: var(--text-xs);
+                          color: var(--color-text-muted);
+                        ">
+                      Admin · hace 2 horas
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           ALERTS SHOWCASE
+           ===================================================== -->
+        <div class="section-nx">
+          <h2 class="section-title">Alertas del Sistema</h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="alert-nx info">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <div class="alert-body">
+                  <div class="alert-title">Información</div>
+                  <div class="alert-desc">
+                    Nueva versión disponible. Actualiza para mejoras de
+                    rendimiento.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="alert-nx success">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                <div class="alert-body">
+                  <div class="alert-title">Éxito</div>
+                  <div class="alert-desc">
+                    Todos los procesos se ejecutaron correctamente.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="alert-nx warning">
+                <ion-icon name="warning-outline"></ion-icon>
+                <div class="alert-body">
+                  <div class="alert-title">Advertencia</div>
+                  <div class="alert-desc">
+                    El uso de memoria supera el 80% de la capacidad.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="alert-nx danger">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <div class="alert-body">
+                  <div class="alert-title">Error Crítico</div>
+                  <div class="alert-desc">
+                    Fallo en el servicio de pagos. Revisión inmediata
+                    requerida.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           TABS + TABLE
+           ===================================================== -->
+        <div class="card-nx section-nx animate-in">
+          <div class="card-header-nx">
+            <h2 class="section-title" style="margin: 0">Transacciones</h2>
+            <div style="display: flex; align-items: center; gap: var(--space-3)">
+              <div class="filter-bar">
+                <select>
+                  <option>Estado: Todos</option>
+                  <option>Éxito</option>
+                  <option>Pendiente</option>
+                  <option>Fallido</option>
+                </select>
+                <select>
+                  <option>Tipo: Todos</option>
+                  <option>API</option>
+                  <option>Web</option>
+                  <option>SaaS</option>
+                  <option>B2B</option>
+                </select>
+              </div>
+              <button class="btn-nx btn-danger btn-sm">
+                <ion-icon name="trash-outline"></ion-icon> Purgar
+              </button>
+              <button class="btn-nx btn-primary btn-sm" onclick="openModal('modalAdd')">
+                <ion-icon name="add-outline"></ion-icon> Agregar
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div style="padding: 0 var(--space-4)">
+            <div class="tabs-nx">
+              <button class="tab-btn active" onclick="switchTab(this, 'tab-all')">
+                <ion-icon name="list-outline"></ion-icon> Todas
+              </button>
+              <button class="tab-btn" onclick="switchTab(this, 'tab-success')">
+                <ion-icon name="checkmark-circle-outline"></ion-icon> Exitosas
+              </button>
+              <button class="tab-btn" onclick="switchTab(this, 'tab-pending')">
+                <ion-icon name="time-outline"></ion-icon> Pendientes
+              </button>
+              <button class="tab-btn" onclick="switchTab(this, 'tab-failed')">
+                <ion-icon name="close-circle-outline"></ion-icon> Fallidas
+              </button>
+            </div>
+          </div>
+
+          <div class="tab-panel active" id="tab-all">
+            <div class="table-wrapper">
+              <table class="table-nx">
+                <colgroup>
+                  <col class="col-check" />
+                  <col class="col-id" />
+                  <col class="col-entity" />
+                  <col class="col-priority" />
+                  <col class="col-status" />
+                  <col class="col-tags" />
+                  <col class="col-value" />
+                  <col class="col-actions" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th class="col-check" style="padding-left: var(--space-4)">
+                      <input type="checkbox" />
+                    </th>
+                    <th class="col-id">ID</th>
+                    <th class="col-entity">Entidad</th>
+                    <th class="col-priority">Prioridad</th>
+                    <th class="col-status">Estado</th>
+                    <th class="col-tags">Tags</th>
+                    <th class="col-value">Valor</th>
+                    <th class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Fila con texto largo de demostración -->
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">948-Z</td>
+                    <td class="col-entity"
+                      title="Sarah Miller — Directora de Operaciones Globales y Transformación Digital">
+                      <div class="entity-cell">
+                        <div class="entity-avatar">SM</div>
+                        <span class="entity-name">Sarah Miller — Directora de Operaciones Globales y
+                          Transformación Digital</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-high">HIGH</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-green"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Éxito</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-blue">API</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $1,240
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" title="Editar"
+                          onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" title="Ver" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" title="Eliminar"
+                          style="color: var(--color-danger)" onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">949-X</td>
+                    <td class="col-entity"
+                      title="James Davis — Gerente de Infraestructura Cloud y Seguridad Perimetral">
+                      <div class="entity-cell">
+                        <div class="entity-avatar" style="
+                              background: linear-gradient(
+                                135deg,
+                                #10b981,
+                                #047857
+                              );
+                            ">
+                          JD
+                        </div>
+                        <span class="entity-name">James Davis — Gerente de Infraestructura Cloud y
+                          Seguridad Perimetral</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-med">MED</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-amber"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Pendiente</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-cyan">Web</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $850
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" style="color: var(--color-danger)"
+                          onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">950-A</td>
+                    <td class="col-entity" title="Robert Taylor">
+                      <div class="entity-cell">
+                        <div class="entity-avatar" style="
+                              background: linear-gradient(
+                                135deg,
+                                #f59e0b,
+                                #d97706
+                              );
+                            ">
+                          RT
+                        </div>
+                        <span class="entity-name">Robert Taylor</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-low">LOW</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-red"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Fallido</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-amber">Reembolso</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $2,100
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" style="color: var(--color-danger)"
+                          onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">951-B</td>
+                    <td class="col-entity"
+                      title="Emily Lewis — Responsable de Producto e Innovación en Plataformas SaaS B2B">
+                      <div class="entity-cell">
+                        <div class="entity-avatar" style="
+                              background: linear-gradient(
+                                135deg,
+                                #8b5cf6,
+                                #7c3aed
+                              );
+                            ">
+                          EL
+                        </div>
+                        <span class="entity-name">Emily Lewis — Responsable de Producto e Innovación
+                          en Plataformas SaaS B2B</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-high">HIGH</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-green"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Éxito</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-purple">SaaS</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $432
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" style="color: var(--color-danger)"
+                          onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">952-M</td>
+                    <td class="col-entity" title="Michael Chen">
+                      <div class="entity-cell">
+                        <div class="entity-avatar" style="
+                              background: linear-gradient(
+                                135deg,
+                                #06b6d4,
+                                #0284c7
+                              );
+                            ">
+                          MC
+                        </div>
+                        <span class="entity-name">Michael Chen</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-med">MED</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-green"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Éxito</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-blue">API</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $150
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" style="color: var(--color-danger)"
+                          onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
+                      <input type="checkbox" />
+                    </td>
+                    <td class="col-id text-mono text-muted">953-K</td>
+                    <td class="col-entity"
+                      title="Kevin Hart — Director Ejecutivo de Alianzas Estratégicas y Desarrollo de Negocio Internacional">
+                      <div class="entity-cell">
+                        <div class="entity-avatar" style="
+                              background: linear-gradient(
+                                135deg,
+                                #ef4444,
+                                #b91c1c
+                              );
+                            ">
+                          KH
+                        </div>
+                        <span class="entity-name">Kevin Hart — Director Ejecutivo de Alianzas
+                          Estratégicas y Desarrollo de Negocio
+                          Internacional</span>
+                      </div>
+                    </td>
+                    <td class="col-priority">
+                      <span class="priority-low">LOW</span>
+                    </td>
+                    <td class="col-status">
+                      <span class="badge-nx badge-green"><ion-icon name="ellipse"
+                          style="font-size: 8px"></ion-icon>Éxito</span>
+                    </td>
+                    <td class="col-tags">
+                      <span class="badge-nx badge-neutral">B2B</span>
+                    </td>
+                    <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
+                      $2,450
+                    </td>
+                    <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
+                      <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            gap: var(--space-2);
+                          ">
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalEdit')">
+                          <ion-icon name="create-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" onclick="openModal('modalView')">
+                          <ion-icon name="eye-outline"></ion-icon>
+                        </button>
+                        <button class="btn-nx btn-icon btn-ghost btn-sm" style="color: var(--color-danger)"
+                          onclick="openModal('modalConfirm')">
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  padding: var(--space-3) var(--space-4);
+                  flex-wrap: wrap;
+                  gap: var(--space-3);
+                ">
+              <span class="pagination-info">Mostrando 1–6 de 244 registros</span>
+              <div class="pagination-nx">
+                <button class="page-btn" disabled>
+                  <ion-icon name="chevron-back-outline"></ion-icon>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <span style="
+                      color: var(--color-text-muted);
+                      font-size: var(--text-sm);
+                    ">…</span>
+                <button class="page-btn">41</button>
+                <button class="page-btn">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="tab-success">
+            <div style="
+                  padding: var(--space-10) var(--space-6);
+                  text-align: center;
+                  color: var(--color-text-muted);
+                ">
+              <ion-icon name="checkmark-circle-outline" style="
+                    font-size: 40px;
+                    color: var(--color-success);
+                    display: block;
+                    margin: 0 auto var(--space-3);
+                  "></ion-icon>
+              <div>Mostrando solo transacciones exitosas</div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-pending">
+            <div style="
+                  padding: var(--space-10) var(--space-6);
+                  text-align: center;
+                  color: var(--color-text-muted);
+                ">
+              <ion-icon name="time-outline" style="
+                    font-size: 40px;
+                    color: var(--color-warning);
+                    display: block;
+                    margin: 0 auto var(--space-3);
+                  "></ion-icon>
+              <div>Mostrando solo transacciones pendientes</div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-failed">
+            <div style="
+                  padding: var(--space-10) var(--space-6);
+                  text-align: center;
+                  color: var(--color-text-muted);
+                ">
+              <ion-icon name="close-circle-outline" style="
+                    font-size: 40px;
+                    color: var(--color-danger);
+                    display: block;
+                    margin: 0 auto var(--space-3);
+                  "></ion-icon>
+              <div>Mostrando solo transacciones fallidas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           BUTTONS SHOWCASE
+           ===================================================== -->
+        <div class="section-nx">
+          <h2 class="section-title">Componentes — Botones</h2>
+          <div class="card-nx">
+            <div class="card-body-nx">
+              <div class="label" style="margin-bottom: var(--space-3)">
+                Variantes
+              </div>
+              <div style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: var(--space-3);
+                    margin-bottom: var(--space-4);
+                  ">
+                <button class="btn-nx btn-primary btn-md">Primario</button>
+                <button class="btn-nx btn-secondary btn-md">
+                  Secundario
+                </button>
+                <button class="btn-nx btn-outline btn-md">Outline</button>
+                <button class="btn-nx btn-ghost btn-md">Ghost</button>
+                <button class="btn-nx btn-success btn-md">Éxito</button>
+                <button class="btn-nx btn-warning btn-md">Advertencia</button>
+                <button class="btn-nx btn-danger btn-md">Peligro</button>
+              </div>
+              <div class="divider-nx"></div>
+              <div class="label" style="margin-bottom: var(--space-3)">
+                Tamaños
+              </div>
+              <div style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    gap: var(--space-3);
+                    margin-bottom: var(--space-4);
+                  ">
+                <button class="btn-nx btn-primary btn-xs">XSmall</button>
+                <button class="btn-nx btn-primary btn-sm">Small</button>
+                <button class="btn-nx btn-primary btn-md">Medium</button>
+                <button class="btn-nx btn-primary btn-lg">Large</button>
+                <button class="btn-nx btn-primary btn-xl">XLarge</button>
+              </div>
+              <div class="divider-nx"></div>
+              <div class="label" style="margin-bottom: var(--space-3)">
+                Con iconos & especiales
+              </div>
+              <div style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    gap: var(--space-3);
+                  ">
+                <button class="btn-nx btn-primary btn-md">
+                  <ion-icon name="add-circle-outline"></ion-icon> Con icono
+                </button>
+                <button class="btn-nx btn-secondary btn-md btn-pill">
+                  Pill Shape
+                </button>
+                <button class="btn-nx btn-primary btn-icon btn-md">
+                  <ion-icon name="star-outline"></ion-icon>
+                </button>
+                <button class="btn-nx btn-outline btn-icon btn-md">
+                  <ion-icon name="settings-outline"></ion-icon>
+                </button>
+                <button class="btn-nx btn-primary btn-md" onclick="
+                      showToast(
+                        'success',
+                        '¡Acción completada!',
+                        'El registro fue guardado exitosamente.',
+                      )
+                    ">
+                  <ion-icon name="checkmark-outline"></ion-icon> Mostrar Toast
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           BADGES + SWITCHES
+           ===================================================== -->
+        <div class="section-nx">
+          <div class="row g-4">
+            <div class="col-12 col-md-6">
+              <h2 class="section-title">Badges</h2>
+              <div class="card-nx">
+                <div class="card-body-nx" style="display: flex; flex-wrap: wrap; gap: var(--space-3)">
+                  <span class="badge-nx badge-blue">Azul</span>
+                  <span class="badge-nx badge-green">Verde</span>
+                  <span class="badge-nx badge-amber">Ámbar</span>
+                  <span class="badge-nx badge-red">Rojo</span>
+                  <span class="badge-nx badge-purple">Púrpura</span>
+                  <span class="badge-nx badge-cyan">Cian</span>
+                  <span class="badge-nx badge-neutral">Neutro</span>
+                  <span class="badge-nx badge-blue"><ion-icon name="star-outline"></ion-icon> Con icono</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <h2 class="section-title">Switches & Controles</h2>
+              <div class="card-nx">
+                <div class="card-body-nx" style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: var(--space-3);
+                    ">
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      ">
+                    <span style="
+                          font-size: var(--text-sm);
+                          color: var(--color-text-secondary);
+                        ">Notificaciones email</span>
+                    <label class="switch-nx"><input type="checkbox" checked /><span class="switch-track"></span></label>
+                  </div>
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      ">
+                    <span style="
+                          font-size: var(--text-sm);
+                          color: var(--color-text-secondary);
+                        ">Alertas de seguridad</span>
+                    <label class="switch-nx"><input type="checkbox" /><span class="switch-track"></span></label>
+                  </div>
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      ">
+                    <span style="
+                          font-size: var(--text-sm);
+                          color: var(--color-text-secondary);
+                        ">Modo mantenimiento</span>
+                    <label class="switch-nx"><input type="checkbox" checked /><span class="switch-track"></span></label>
+                  </div>
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      ">
+                    <span style="
+                          font-size: var(--text-sm);
+                          color: var(--color-text-secondary);
+                        ">Acceso API externo</span>
+                    <label class="switch-nx"><input type="checkbox" /><span class="switch-track"></span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+           FORM SHOWCASE
+           ===================================================== -->
+        <div class="section-nx">
+          <h2 class="section-title">Formularios</h2>
+          <div class="card-nx">
+            <div class="card-body-nx">
+              <div class="row g-4">
+                <div class="col-12 col-md-6">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Nombre completo</label>
+                    <input class="form-control-nx" type="text" placeholder="Ej: Alex Johnson" />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Correo electrónico</label>
+                    <input class="form-control-nx" type="email" placeholder="correo@ejemplo.com" />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Rol de usuario</label>
+                    <select class="form-control-nx">
+                      <option>Seleccionar rol...</option>
+                      <option>Super Admin</option>
+                      <option>Admin</option>
+                      <option>Editor</option>
+                      <option>Viewer</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Estado</label>
+                    <input class="form-control-nx is-valid" type="text" value="Activo" />
+                    <div class="form-hint">Campo válido</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Notas adicionales</label>
+                    <textarea class="form-control-nx" rows="3" placeholder="Escribe aquí..."></textarea>
+                    <div class="form-hint">Máximo 500 caracteres.</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group-nx">
+                    <label class="form-label-nx">Campo con error</label>
+                    <input class="form-control-nx is-invalid" type="text" value="dato_incorrecto" />
+                    <div class="form-error">
+                      Este campo contiene un valor inválido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="
+                    display: flex;
+                    gap: var(--space-3);
+                    margin-top: var(--space-1);
+                  ">
+                <button class="btn-nx btn-primary btn-md" onclick="
+                      showToast(
+                        'success',
+                        'Guardado',
+                        'Los datos se guardaron correctamente.',
+                      )
+                    ">
+                  <ion-icon name="save-outline"></ion-icon> Guardar cambios
+                </button>
+                <button class="btn-nx btn-secondary btn-md">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end page-content -->
+    </main>
+  </div>
+  <!-- end app-shell -->
+
+  <!-- =====================================================
+     MODALS
+     ===================================================== -->
+
+  <!-- Modal: Agregar Registro -->
+  <div class="modal-overlay" id="modalAdd">
+    <div class="modal-nx">
+      <div class="modal-header-nx">
+        <h3 class="modal-title-nx">Nuevo Registro</h3>
+        <button class="modal-close" onclick="closeModal('modalAdd')">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="modal-body-nx">
+        <div class="form-group-nx">
+          <label class="form-label-nx">Entidad</label>
+          <input class="form-control-nx" type="text" placeholder="Nombre de la entidad" />
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="form-group-nx">
+              <label class="form-label-nx">Prioridad</label>
+              <select class="form-control-nx">
+                <option>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group-nx">
+              <label class="form-label-nx">Tipo</label>
+              <select class="form-control-nx">
+                <option>API</option>
+                <option>Web</option>
+                <option>SaaS</option>
+                <option>B2B</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group-nx">
+          <label class="form-label-nx">Valor ($)</label>
+          <input class="form-control-nx" type="number" placeholder="0.00" />
+        </div>
+      </div>
+      <div class="modal-footer-nx">
+        <button class="btn-nx btn-secondary btn-md" onclick="closeModal('modalAdd')">
+          Cancelar
+        </button>
+        <button class="btn-nx btn-primary btn-md" onclick="
+              closeModal('modalAdd');
+              showToast(
+                'success',
+                'Registro creado',
+                'El nuevo registro fue guardado.',
+              );
+            ">
+          <ion-icon name="save-outline"></ion-icon> Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Editar -->
+  <div class="modal-overlay" id="modalEdit">
+    <div class="modal-nx">
+      <div class="modal-header-nx">
+        <h3 class="modal-title-nx">
+          Editar Registro
+          <span class="badge-nx badge-blue" style="margin-left: 8px">948-Z</span>
+        </h3>
+        <button class="modal-close" onclick="closeModal('modalEdit')">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="modal-body-nx">
+        <div class="form-group-nx">
+          <label class="form-label-nx">Entidad</label>
+          <input class="form-control-nx" type="text" value="Sarah Miller" />
+        </div>
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="form-group-nx">
+              <label class="form-label-nx">Prioridad</label>
+              <select class="form-control-nx">
+                <option selected>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group-nx">
+              <label class="form-label-nx">Estado</label>
+              <select class="form-control-nx">
+                <option selected>Éxito</option>
+                <option>Pendiente</option>
+                <option>Fallido</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group-nx">
+          <label class="form-label-nx">Valor ($)</label>
+          <input class="form-control-nx" type="number" value="1240" />
+        </div>
+      </div>
+      <div class="modal-footer-nx">
+        <button class="btn-nx btn-secondary btn-md" onclick="closeModal('modalEdit')">
+          Cancelar
+        </button>
+        <button class="btn-nx btn-primary btn-md" onclick="
+              closeModal('modalEdit');
+              showToast('info', 'Actualizado', 'El registro fue actualizado.');
+            ">
+          <ion-icon name="checkmark-outline"></ion-icon> Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Ver Detalle -->
+  <div class="modal-overlay" id="modalView">
+    <div class="modal-nx" style="max-width: 480px">
+      <div class="modal-header-nx">
+        <h3 class="modal-title-nx">Detalle de Transacción</h3>
+        <button class="modal-close" onclick="closeModal('modalView')">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="modal-body-nx">
+        <div style="
+              display: flex;
+              align-items: center;
+              gap: var(--space-4);
+              margin-bottom: var(--space-4);
+              padding-bottom: var(--space-5);
+              border-bottom: 1px solid var(--color-border);
+            ">
+          <div class="entity-avatar" style="width: 52px; height: 52px; font-size: var(--text-md)">
+            SM
+          </div>
+          <div>
+            <div style="font-size: var(--text-lg); font-weight: var(--fw-semi)">
+              Sarah Miller
+            </div>
+            <div style="
+                  font-size: var(--text-sm);
+                  color: var(--color-text-muted);
+                ">
+              ID: 948-Z · API
+            </div>
+          </div>
+          <span class="badge-nx badge-green" style="margin-left: auto">Éxito</span>
+        </div>
+        <div style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--space-3);
+            ">
+          <div>
+            <div class="label" style="margin-bottom: 4px">Valor</div>
+            <div style="
+                  font-size: var(--text-lg);
+                  font-weight: var(--fw-bold);
+                  font-family: &quot;DM Mono&quot;, monospace;
+                ">
+              $1,240.00
+            </div>
+          </div>
+          <div>
+            <div class="label" style="margin-bottom: 4px">Prioridad</div>
+            <span class="priority-high">HIGH</span>
+          </div>
+          <div>
+            <div class="label" style="margin-bottom: 4px">Fecha</div>
+            <div style="font-size: var(--text-sm)">19 Feb 2026</div>
+          </div>
+          <div>
+            <div class="label" style="margin-bottom: 4px">Tag</div>
+            <span class="badge-nx badge-blue">API</span>
+          </div>
+        </div>
+        <div style="margin-top: var(--space-5)">
+          <div class="label" style="margin-bottom: var(--space-2)">
+            Progreso de proceso
+          </div>
+          <div class="progress-nx">
+            <div class="progress-fill success" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-nx">
+        <button class="btn-nx btn-secondary btn-md" onclick="closeModal('modalView')">
+          Cerrar
+        </button>
+        <button class="btn-nx btn-primary btn-md" onclick="
+              closeModal('modalView');
+              openModal('modalEdit');
+            ">
+          <ion-icon name="create-outline"></ion-icon> Editar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirmar eliminación -->
+  <div class="modal-overlay" id="modalConfirm">
+    <div class="modal-nx" style="max-width: 420px">
+      <div class="modal-header-nx">
+        <h3 class="modal-title-nx">Confirmar eliminación</h3>
+        <button class="modal-close" onclick="closeModal('modalConfirm')">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <div class="modal-body-nx" style="text-align: center">
+        <div style="
+              width: 60px;
+              height: 60px;
+              border-radius: 50%;
+              background: var(--color-danger-bg);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto var(--space-4);
+            ">
+          <ion-icon name="trash-outline" style="font-size: 28px; color: var(--color-danger)"></ion-icon>
+        </div>
+        <div style="
+              font-size: var(--text-md);
+              font-weight: var(--fw-semi);
+              margin-bottom: var(--space-2);
+            ">
+          ¿Eliminar este registro?
+        </div>
+        <div style="font-size: var(--text-sm); color: var(--color-text-muted)">
+          Esta acción no se puede deshacer. El registro será eliminado
+          permanentemente del sistema.
+        </div>
+      </div>
+      <div class="modal-footer-nx">
+        <button class="btn-nx btn-secondary btn-md" onclick="closeModal('modalConfirm')">
+          Cancelar
+        </button>
+        <button class="btn-nx btn-danger btn-md" onclick="
+              closeModal('modalConfirm');
+              showToast(
+                'error',
+                'Eliminado',
+                'El registro fue eliminado del sistema.',
+              );
+            ">
+          <ion-icon name="trash-outline"></ion-icon> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+     TOAST CONTAINER
+     ===================================================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════
+   SIDEBAR — lógica completa
+   ═══════════════════════════════════════════════════════ */
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("mainContent");
+    const toggleIcon = document.getElementById("sidebarToggleIcon");
+    const overlay = document.getElementById("sidebarOverlay");
+
+    // Estado
+    let isCollapsed = false; // solo aplica en desktop
+
+    const isMobile = () => window.innerWidth <= 991;
+
+    /* ─── Helpers de estado ────────────────────────────────── */
+    function closeAllSubmenus() {
+      sidebar.querySelectorAll(".sidebar-submenu.is-open").forEach((sm) => {
+        sm.classList.remove("is-open");
+      });
+      sidebar
+        .querySelectorAll(".sidebar-group-trigger.is-open")
+        .forEach((t) => {
+          t.classList.remove("is-open");
+        });
+    }
+
+    function openGroup(trigger) {
+      const submenu = trigger
+        .closest(".sidebar-group")
+        .querySelector(".sidebar-submenu");
+      trigger.classList.add("is-open");
+      submenu.classList.add("is-open");
+    }
+
+    function closeGroup(trigger) {
+      const submenu = trigger
+        .closest(".sidebar-group")
+        .querySelector(".sidebar-submenu");
+      trigger.classList.remove("is-open");
+      submenu.classList.remove("is-open");
+    }
+
+    /* ─── Toggle principal (botón hamburguesa del navbar) ─── */
+    function toggleSidebar() {
+      if (isMobile()) {
+        // Mobile: abrir / cerrar drawer
+        const open = sidebar.classList.contains("is-open");
+        sidebar.classList.toggle("is-open", !open);
+        overlay.classList.toggle("is-visible", !open);
+        toggleIcon.setAttribute(
+          "name",
+          open ? "menu-outline" : "close-outline",
+        );
+      } else {
+        // Desktop: colapsar / expandir
+        isCollapsed = !isCollapsed;
+        sidebar.classList.toggle("is-collapsed", isCollapsed);
+        mainContent.classList.toggle("collapsed", isCollapsed);
+        toggleIcon.setAttribute("name", "menu-outline");
+
+        // Al colapsar: cerrar todos los submenús abiertos
+        if (isCollapsed) closeAllSubmenus();
+      }
+    }
+
+    /* ─── Overlay (mobile): cerrar al hacer clic fuera ─────── */
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("is-open");
+      overlay.classList.remove("is-visible");
+      toggleIcon.setAttribute("name", "menu-outline");
+    });
+
+    /* ─── Resize: limpiar estados cruzados ─────────────────── */
+    window.addEventListener("resize", () => {
+      if (!isMobile()) {
+        // Venimos de mobile → limpiar estado mobile
+        sidebar.classList.remove("is-open");
+        overlay.classList.remove("is-visible");
+        toggleIcon.setAttribute("name", "menu-outline");
+        // Restaurar estado desktop
+        sidebar.classList.toggle("is-collapsed", isCollapsed);
+        mainContent.classList.toggle("collapsed", isCollapsed);
+      } else {
+        // Venimos de desktop → limpiar estado desktop
+        sidebar.classList.remove("is-collapsed");
+        mainContent.classList.remove("collapsed");
+        // No cambiar isCollapsed — se recuerda para cuando vuelva desktop
+      }
+    });
+
+    /* ─── Clic fuera (flyouts en modo colapsado) ────────────── */
+    document.addEventListener("click", (e) => {
+      if (!isCollapsed) return; // solo en modo colapsado
+      if (sidebar.contains(e.target)) return; // clic dentro del sidebar
+      closeAllSubmenus();
+    });
+
+    /* ─── toggleGroup: expandir / colapsar submenú ──────────
+   Comportamiento:
+   • Sidebar expandido: acordeón — se puede tener varios abiertos
+     o uno solo abierto a la vez (aquí: un solo abierto para claridad)
+   • Sidebar colapsado: flyout exclusivo (uno a la vez)
+   • Si el sidebar está COLAPSADO al hacer clic en un grupo:
+     se EXPANDE el sidebar y abre el grupo
+──────────────────────────────────────────────────────── */
+    function toggleGroup(trigger) {
+      const group = trigger.closest(".sidebar-group");
+      const submenu = group.querySelector(".sidebar-submenu");
+      const isOpen = submenu.classList.contains("is-open");
+
+      // Si está colapsado en desktop: expandir primero, luego abrir el grupo
+      if (!isMobile() && isCollapsed) {
+        isCollapsed = false;
+        sidebar.classList.remove("is-collapsed");
+        mainContent.classList.remove("collapsed");
+        closeAllSubmenus();
+        // Pequeño delay para que la animación de expansión preceda al acordeón
+        setTimeout(() => openGroup(trigger), 50);
+        return;
+      }
+
+      // Cerrar todos los otros submenús (acordeón: uno a la vez)
+      sidebar
+        .querySelectorAll(".sidebar-group-trigger.is-open")
+        .forEach((t) => {
+          if (t !== trigger) closeGroup(t);
+        });
+
+      // Toggle de este grupo
+      if (isOpen) closeGroup(trigger);
+      else openGroup(trigger);
+    }
+
+    /* ─── activateItem: marcar ítem activo ─────────────────
+   Comportamiento:
+   • Limpia todos los activos anteriores
+   • Marca el ítem clicado como activo
+   • Si es un subitem: abre su grupo padre y marca el trigger como has-active
+   • Si el sidebar está colapsado al hacer clic en un subitem de un flyout:
+     se mantiene colapsado (flyout sigue visible momentáneamente)
+──────────────────────────────────────────────────────── */
+    function activateItem(el) {
+      // Limpiar estado activo anterior
+      sidebar
+        .querySelectorAll(".is-active")
+        .forEach((i) => i.classList.remove("is-active"));
+      sidebar
+        .querySelectorAll(".has-active")
+        .forEach((t) => t.classList.remove("has-active"));
+
+      // Activar el elemento clicado
+      el.classList.add("is-active");
+
+      // Si es un subitem dentro de un grupo
+      const group = el.closest(".sidebar-group");
+      if (group) {
+        const trigger = group.querySelector(".sidebar-group-trigger");
+        const submenu = group.querySelector(".sidebar-submenu");
+
+        // Marcar trigger como padre activo
+        trigger.classList.add("has-active");
+
+        // Mantener el submenú abierto (no cerrar al seleccionar)
+        trigger.classList.add("is-open");
+        submenu.classList.add("is-open");
+
+        // En modo colapsado: cerrar el flyout después de seleccionar
+        if (!isMobile() && isCollapsed) {
+          setTimeout(() => {
+            trigger.classList.remove("is-open");
+            submenu.classList.remove("is-open");
+          }, 200);
+        }
+
+        // En mobile: cerrar el sidebar después de seleccionar
+        if (isMobile()) {
+          setTimeout(() => {
+            sidebar.classList.remove("is-open");
+            overlay.classList.remove("is-visible");
+            toggleIcon.setAttribute("name", "menu-outline");
+          }, 150);
+        }
+      } else {
+        // Item simple: cerrar todos los submenús
+        closeAllSubmenus();
+
+        // En mobile: cerrar el sidebar
+        if (isMobile()) {
+          setTimeout(() => {
+            sidebar.classList.remove("is-open");
+            overlay.classList.remove("is-visible");
+            toggleIcon.setAttribute("name", "menu-outline");
+          }, 150);
+        }
+      }
+    }
+
+    /* ─── Inicializar estado al cargar ─────────────────────
+   Abrir automáticamente el grupo que contiene el subitem activo
+──────────────────────────────────────────────────────── */
+    document.addEventListener("DOMContentLoaded", () => {
+      const activeSubitem = sidebar.querySelector(
+        ".sidebar-subitem.is-active",
+      );
+      if (activeSubitem) {
+        const group = activeSubitem.closest(".sidebar-group");
+        const trigger = group?.querySelector(".sidebar-group-trigger");
+        const submenu = group?.querySelector(".sidebar-submenu");
+        if (trigger && submenu) {
+          trigger.classList.add("is-open", "has-active");
+          submenu.classList.add("is-open");
+        }
+      }
+    });
+
+    /* =====================================================
+   DARK MODE
+   ===================================================== */
+    /* =====================================================
+   TEMA — persiste en localStorage
+   ===================================================== */
+    const themeIcon = document.getElementById("themeIcon");
+
+    // Aplicar tema guardado al cargar
+    (function applyStoredTheme() {
+      const saved = localStorage.getItem("nexus-theme");
+      if (saved === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        themeIcon.setAttribute("name", "sunny-outline");
+      }
+    })();
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute("data-theme") === "dark";
+      const next = isDark ? "light" : "dark";
+      html.setAttribute("data-theme", next);
+      themeIcon.setAttribute(
+        "name",
+        isDark ? "moon-outline" : "sunny-outline",
+      );
+      localStorage.setItem("nexus-theme", next);
+    }
+
+    /* =====================================================
+   MODALS
+   ===================================================== */
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+      overlay.addEventListener("click", function (e) {
+        if (e.target === this) closeModal(this.id);
+      });
+    });
+
+    /* =====================================================
+   TABS
+   ===================================================== */
+    function switchTab(btn, panelId) {
+      btn
+        .closest(".tabs-nx")
+        .querySelectorAll(".tab-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".tab-panel").forEach((p) => {
+        if (
+          ["tab-all", "tab-success", "tab-pending", "tab-failed"].includes(
+            p.id,
+          )
+        )
+          p.classList.remove("active");
+      });
+      document.getElementById(panelId).classList.add("active");
+    }
+
+    /* =====================================================
+   TOASTS
+   ===================================================== */
+    const toastIcons = {
+      success: "checkmark-circle-outline",
+      error: "close-circle-outline",
+      info: "information-circle-outline",
+      warning: "warning-outline",
+    };
+
+    function showToast(type, title, message) {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast-nx ${type}`;
+      toast.innerHTML = `
+      <div class="toast-icon-wrap"><ion-icon name="${toastIcons[type]}"></ion-icon></div>
+      <div style="flex:1;"><div class="toast-title">${title}</div><div class="toast-msg">${message}</div></div>
+      <button onclick="this.parentElement.remove()" style="border:none;background:none;cursor:pointer;color:var(--color-text-muted);padding:0;display:flex;align-items:center;">
+        <ion-icon name="close-outline" style="font-size:18px;"></ion-icon>
+      </button>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = "slideInToast 0.3s ease reverse";
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    /* =====================================================
+   PAGINATION
+   ===================================================== */
+    document.querySelectorAll(".page-btn:not(:disabled)").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        if (this.querySelector("ion-icon")) return;
+        this.closest(".pagination-nx")
+          .querySelectorAll(".page-btn")
+          .forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  </script>
+</body>
+
+</html>

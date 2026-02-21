@@ -1,225 +1,127 @@
+<div class="page-content">
 
-            <div class="title">
-                <h1>dashboard</h1>
-            </div>
-            <!-- enlaces directos o acrotadores mas usados -->
-            <div class="direct-link">
-                <div class="container-direct-links">
-                    <div class="direct-link-item red">
-                        <a href="#">
-                            <div class="direct-link-text">
-                                <h3>14</h3>
-                                <p>Cajas</p>
-                            </div>
-                            <div class="direct-link-image">
-                                <ion-icon name="medkit"></ion-icon>
-                            </div>
-                            <div class="direct-link-collapsed">
-                                <h3>Abrir</h3>
-                            </div>
-                        </a>
+    <div class="page-header" style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-5); flex-wrap: wrap; gap: var(--space-3);">
+        <div>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">
+                Bienvenido de nuevo — <?php echo date('l d M Y'); ?>
+            </p>
+        </div>
+        <div style="display: flex; gap: var(--space-3);">
+            <button class="btn-nx btn-secondary btn-md">
+                <ion-icon name="download-outline"></ion-icon>
+                Exportar
+            </button>
+            <button class="btn-nx btn-primary btn-md">
+                <ion-icon name="add-outline"></ion-icon>
+                Nuevo
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row g-3 mb-4">
+        <!-- Ventas Totales -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="card-title">Ventas Totales</div>
+                        <div class="stat-value">12,450Bs</div>
                     </div>
-                    <div class="direct-link-item orange">
-                        <a href="#">
-                            <div class="direct-link-text">
-                                <h3>1300</h3>
-                                <p>Inventario</p>
-                            </div>
-                            <div class="direct-link-image">
-                                <ion-icon name="cube"></ion-icon>
-                            </div>
-                            <div class="direct-link-collapsed">
-                                <h3>Abrir</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="direct-link-item green">
-                        <a href="#">
-                            <div class="direct-link-text">
-                                <h3>14</h3>
-                                <p>Reportes</p>
-                            </div>
-                            <div class="direct-link-image">
-                                <ion-icon name="clipboard"></ion-icon>
-                            </div>
-                            <div class="direct-link-collapsed">
-                                <h3>Abrir</h3>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="direct-link-item blue">
-                        <a href="#">
-                            <div class="direct-link-text">
-                                <h3>14</h3>
-                                <p>Sucursales</p>
-                            </div>
-                            <div class="direct-link-image">
-                                <ion-icon name="contacts"></ion-icon>
-                            </div>
-                            <div class="direct-link-collapsed">
-                                <h3>Abrir</h3>
-                            </div>
-                        </a>
+                    <div class="stat-icon blue">
+                        <ion-icon name="cash-outline"></ion-icon>
                     </div>
                 </div>
-            </div>
-            <!-- resumende las compras del año actual -->
-            <div class="sub-title">
-                <h2>resumen de compras diarias</h2>
-            </div>
-            <div class="res-compras">
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>Producto</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="stat-delta up">
+                        <ion-icon name="trending-up-outline"></ion-icon>
+                        +12.5%
+                    </span>
+                    <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+                </div>
+                <div class="progress-nx">
+                    <div class="progress-fill" style="width: 72%"></div>
                 </div>
             </div>
-            <!-- resumende ventas del año actual -->
-            <div class="sub-title">
-                <h2>resumen de ventas diarias</h2>
-            </div>
-            <div class="res-ventas">
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>Producto</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
+        </div>
 
-                        </tbody>
-                    </table>
+        <!-- Nuevos Usuarios -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="card-title">Nuevos Usuarios</div>
+                        <div class="stat-value">1,205</div>
+                    </div>
+                    <div class="stat-icon green">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="stat-delta up">
+                        <ion-icon name="trending-up-outline"></ion-icon>
+                        +6.2%
+                    </span>
+                    <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+                </div>
+                <div class="progress-nx">
+                    <div class="progress-fill success" style="width: 61%"></div>
                 </div>
             </div>
-            <!-- resumen de ingresos egresos -->
-            <div class="sub-title">
-                <h2>ingresos y egresos</h2>
-            </div>
-            <div class="res-ingresos-egresos">
-                <div class="table-container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>Producto</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>cofarm</td>
-                                <td>10bs</td>
-                                <td>500 unidades</td>
-                                <td><span class="estate"> Disponible</span></td>
-                            </tr>
+        </div>
 
-                        </tbody>
-                    </table>
+        <!-- Ingresos -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="card-title">Ingresos</div>
+                        <div class="stat-value">45,200Bs</div>
+                    </div>
+                    <div class="stat-icon purple">
+                        <ion-icon name="wallet-outline"></ion-icon>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="stat-delta up">
+                        <ion-icon name="trending-up-outline"></ion-icon>
+                        +8.1%
+                    </span>
+                    <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+                </div>
+                <div class="progress-nx">
+                    <div class="progress-fill" style="width: 85%; background: var(--color-purple)"></div>
                 </div>
             </div>
-            <!-- ingreso egresso grafica de barras -->
-            <div class="sub-title">
-                <h2>grafica de barras ingresos y egresos</h2>
-            </div>
-            <div class="ingresos-egresos-barras">
-                <div class="graphyc-container">
-                    <div id="graphyc" style="width: 500px;height:400px; min-width: 200px;"></div>
+        </div>
 
+        <!-- Pedidos -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="stat-card animate-in">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="card-title">Pedidos</div>
+                        <div class="stat-value">320</div>
+                    </div>
+                    <div class="stat-icon amber">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="stat-delta down">
+                        <ion-icon name="trending-down-outline"></ion-icon>
+                        -2.4%
+                    </span>
+                    <span class="text-muted" style="font-size: var(--text-xs)">vs mes anterior</span>
+                </div>
+                <div class="progress-nx">
+                    <div class="progress-fill warning" style="width: 43%"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+
+</div>
