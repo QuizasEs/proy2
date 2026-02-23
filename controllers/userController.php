@@ -25,9 +25,7 @@ class userController extends userModel
         $usuarioName = mainModel::limpiar_cadena($_POST['UsuarioName_reg']);
         $password = mainModel::limpiar_cadena($_POST['Password_reg']);
         $password_confirm = mainModel::limpiar_cadena($_POST['PasswordConfirm_reg']);
-        $sucursal =  mainModel::limpiar_cadena($_POST['Sucursal_reg']);
         $rol = mainModel::limpiar_cadena($_POST['Rol_reg']);
-        $sucursal = (int)$sucursal;
         $rol = (int)$rol;
 
 
@@ -35,7 +33,7 @@ class userController extends userModel
 
 
         /* comprobar que los campos obligatorios no esten vacios */
-        if ($nombres == "" || $apellido_paterno == "" || $apellido_materno == "" || $carnet == "" || $usuarioName == "" || $password == "" || $password_confirm == "" || $sucursal == "" || $rol == "") {
+        if ($nombres == "" || $apellido_paterno == "" || $apellido_materno == "" || $usuarioName == "" || $password == "" || $password_confirm == "" || $rol == "") {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "ocurrio un error inesperado",
@@ -218,7 +216,6 @@ class userController extends userModel
             "Direccion" => $direccion,
             "UsuarioName" => $usuarioName,
             "Password" => $password_hash,
-            "Sucursal" => $sucursal,
             "Rol" => $rol
         ];
         $agregar_usuario = userModel::agregar_usuario_modelo($datos_usuario_reg);
@@ -399,6 +396,432 @@ class userController extends userModel
         return $tabla;
     }
 
+
+    /* -----------------------------------controlador para actualizar perfil------------------------------------------ */
+    public function actualizar_perfil_controller()
+    {
+        $id = mainModel::decryption($_POST['Usuario_id_up']);
+        $nombres = mainModel::limpiar_cadena($_POST['Nombres_up']);
+        $apellido_paterno = mainModel::limpiar_cadena($_POST['ApellidoPaterno_up']);
+        $apellido_materno = mainModel::limpiar_cadena($_POST['ApellidoMaterno_up']);
+        $carnet = mainModel::limpiar_cadena($_POST['Carnet_up']);
+        $telefono = mainModel::limpiar_cadena($_POST['Telefono_up']);
+        $correo = mainModel::limpiar_cadena($_POST['Correo_up']);
+        $direccion = mainModel::limpiar_cadena($_POST['Direccion_up']);
+
+        if ($nombres == "" || $apellido_paterno == "" || $apellido_materno == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $nombres)) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "El NOMBRE no coincide con el formato solicitado!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_paterno)) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "El APELLIDO PATERNO no coincide con el formato solicitado!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_materno)) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "El APELLIDO MATERNO no coincide con el formato solicitado!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        if ($carnet != "") {
+            if (mainModel::verificar_datos("[0-9]{6,20}", $carnet)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "El Carnet no coincide con el formato solicitado!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+        }
+
+        if ($telefono != "") {
+            if (mainModel::verificar_datos("[0-9]{6,20}", $telefono)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "El Telefono no coincide con el formato solicitado!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+        }
+
+        if ($correo != "") {
+            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "Has ingresado un correo no valido!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+        }
+
+        $datos_perfil = [
+            "Nombres" => $nombres,
+            "ApellidoPaterno" => $apellido_paterno,
+            "ApellidoMaterno" => $apellido_materno,
+            "Carnet" => $carnet,
+            "Telefono" => $telefono,
+            "Correo" => $correo,
+            "Direccion" => $direccion,
+            "Id" => $id
+        ];
+
+        $actualizar_perfil = userModel::actualizar_perfil_modelo($datos_perfil);
+
+        if ($actualizar_perfil->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "Perfil actualizado",
+                "texto" => "El perfil se ha actualizado con exito",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "No se ha podido actualizar el perfil, por favor intente nuevamente!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para actualizar credenciales------------------------------------------ */
+    public function actualizar_credenciales_controller()
+    {
+        $id = mainModel::decryption($_POST['Usuario_id_up']);
+        $nuevo_usuario = mainModel::limpiar_cadena($_POST['NuevoUsuario_up']);
+        $password_actual = mainModel::limpiar_cadena($_POST['Password_actual_up']);
+        $nuevo_password = mainModel::limpiar_cadena($_POST['NuevoPassword_up']);
+        $confirmar_password = mainModel::limpiar_cadena($_POST['ConfirmarPassword_up']);
+
+        if ($nuevo_usuario == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se ha ingresado el nuevo nombre de usuario!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_]{3,50}", $nuevo_usuario)) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "el nombre de usuario no coincide con el formato solicitado!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $verificar_usuario = userModel::verificar_usuario_modelo($nuevo_usuario, $id);
+
+        if ($verificar_usuario->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "el nombre de usuario ya esta en uso por otro usuario!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $datos_usuario = userModel::obtener_usuario($id);
+        $usuario_actual = $datos_usuario->fetch();
+
+        $password_actual_hash = $usuario_actual['us_password_hash'];
+
+        if ($nuevo_password != "" || $confirmar_password != "") {
+            if ($password_actual == "") {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "debe ingresar la contraseña actual para cambiar la contraseña!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            $password_actual_encrypted = mainModel::encryption($password_actual);
+
+            if ($password_actual_encrypted != $password_actual_hash) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "la contraseña actual es incorrecta!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if ($nuevo_password != $confirmar_password) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "las nuevas contraseñas no coinciden!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            if (mainModel::verificar_datos("[A-Za-zÁÉÍÓÚáéíóúÑñ0-9@$!%*?&._#]{3,100}", $nuevo_password)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "ocurrio un error inesperado",
+                    "texto" => "la nueva contraseña no coincide con el formato solicitado!",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+
+            $nuevo_password = mainModel::encryption($nuevo_password);
+        }
+
+        $datos_credenciales = [
+            "NuevoUsuario" => $nuevo_usuario,
+            "NuevoPassword" => $nuevo_password ?? "",
+            "Id" => $id
+        ];
+
+        $actualizar_credenciales = userModel::actualizar_credenciales_modelo($datos_credenciales);
+
+        if ($actualizar_credenciales->rowCount() == 1) {
+            $_SESSION['usuario_smp'] = $nuevo_usuario;
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "credenciales actualizadas",
+                "texto" => "las credenciales se han actualizado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se han realizado cambios en las credenciales!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+
+    /* -----------------------------------controlador para listar personal------------------------------------------ */
+    public function listar_personal_controller()
+    {
+        $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+        $pagina = mainModel::validar_pagina($pagina);
+        
+        // Contar total de registros
+        $totalRegistros = userModel::contar_personal_modelo()->fetch()['total'];
+        $itemsPorPagina = 15;
+        
+        // Obtener limite SQL
+        $limite = mainModel::obtener_limit($pagina, $itemsPorPagina);
+        
+        // Obtener datos
+        $lista_personal = userModel::listar_personal_modelo($limite);
+        
+        // Obtener URL base - usar la ruta correcta
+        $url = SERVER_URL . "index.php?views=personal";
+        
+        // Generar paginacion
+        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, $itemsPorPagina);
+        
+        return array(
+            'datos' => $lista_personal,
+            'paginacion' => $paginacion,
+            'total' => $totalRegistros
+        );
+    }
+
+    /* -----------------------------------controlador para obtener personal------------------------------------------ */
+    public function obtener_personal_controller($id)
+    {
+        $id = mainModel::decryption($id);
+        $datos = userModel::obtener_usuario_modelo($id);
+        return $datos;
+    }
+
+    /* -----------------------------------controlador para actualizar usuario------------------------------------------ */
+    public function actualizar_usuario_controller()
+    {
+        $id = mainModel::decryption($_POST['Usuario_id_up']);
+        $nombres = mainModel::limpiar_cadena($_POST['nombres']);
+        $apellido_paterno = mainModel::limpiar_cadena($_POST['apellido_paterno']);
+        $apellido_materno = mainModel::limpiar_cadena($_POST['apellido_materno']);
+        $carnet = mainModel::limpiar_cadena($_POST['carnet']);
+        $telefono = mainModel::limpiar_cadena($_POST['telefono']);
+        $correo = mainModel::limpiar_cadena($_POST['correo']);
+        $direccion = mainModel::limpiar_cadena($_POST['direccion']);
+        $username = mainModel::limpiar_cadena($_POST['username']);
+        $password = isset($_POST['password']) ? $_POST['password'] : "";
+        $rol = mainModel::limpiar_cadena($_POST['rol']);
+        $estado = mainModel::limpiar_cadena($_POST['estado']);
+
+        if ($id == "" || $nombres == "" || $apellido_paterno == "" || $apellido_materno == "" || $username == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        // Verificar si el username ya existe (excepto para este usuario)
+        $check_usuario = mainModel::ejecutar_consulta_simple("SELECT us_id FROM usuarios WHERE us_username = '$username' AND us_id != '$id'");
+        if ($check_usuario->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "El USUARIO ya se encuentra registrado!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        // Si hay password, encriptarla
+        $password_hash = null;
+        if (!empty($password)) {
+            $password_hash = mainModel::encryption($password);
+        }
+
+        $datos = [
+            "nombres" => $nombres,
+            "apellido_paterno" => $apellido_paterno,
+            "apellido_materno" => $apellido_materno,
+            "carnet" => $carnet,
+            "telefono" => $telefono,
+            "correo" => $correo,
+            "direccion" => $direccion,
+            "username" => $username,
+            "password" => $password_hash,
+            "rol" => $rol,
+            "estado" => $estado,
+            "id" => $id
+        ];
+
+        $actualizar = userModel::actualizar_usuario_modelo($datos);
+
+        if ($actualizar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "usuario actualizado",
+                "texto" => "los datos del usuario se han actualizado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo actualizar el usuario!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para eliminar usuario------------------------------------------ */
+    public function eliminar_usuario_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se ha especificado el usuario a eliminar!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $eliminar = userModel::eliminar_usuario_modelo($id);
+
+        if ($eliminar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "usuario eliminado",
+                "texto" => "el usuario se ha eliminado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo eliminar el usuario!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para listar roles------------------------------------------ */
+    public function listar_roles_controller()
+    {
+        $roles = userModel::listar_roles_modelo();
+        return $roles;
+    }
 
     /* -----------------------------------controlador para paginar usuarios------------------------------------------ */
     /* -----------------------------------controlador para paginar usuarios------------------------------------------ */

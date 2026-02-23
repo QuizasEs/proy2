@@ -1,16 +1,11 @@
 <?php
-/* preguntamos si se realiza una peticion ajax o no */
-if ($peticionAjax) {
-    require_once "c:/xampp/htdocs/proy2/config/SERVER.php";
-} else {
-    require_once "c:/xampp/htdocs/proy2/config/SERVER.php";
-}
+require_once "c:/xampp/htdocs/proy2/config/SERVER.php";
 
 /* -------------------------------------------------clase principal main model------------------------------------- */
 class mainModel
 {
 
-    /* ------------------funcion de conexion a la base de datos usandos variables de SERVER.php ----------------*/
+    /* ------------------funcion de conexion a la base de datos usandos variables de server.php ----------------*/
     protected static function Conectar()
     {
         try {
@@ -92,13 +87,13 @@ class mainModel
         return $cadena;
     }
     /* --------------------------------------funcion que verifica los datos------------------------------------------------ */
-		protected static function verificar_datos($filtro,$cadena){
-			if(preg_match("/^".$filtro."$/", $cadena)){
-				return false;
-			}else{
-				return true;
-			}
-		}
+ 		protected static function verificar_datos($filtro,$cadena){
+ 			if(preg_match("/^".$filtro."$/", $cadena)){
+ 				return false;
+ 			}else{
+ 				return true;
+ 			}
+ 		}
 
     /* -----------------------------------funcion para verificar las fechas --------------------------------------------------- */
     protected static function verificar_fecha($fecha)
@@ -156,6 +151,166 @@ class mainModel
         $tabla .= ' </ul>
                     </nav>';
         return $tabla;
+    }
+
+    /* -----------------------------------------funcion paginador(15 items por pagina)--------------------------------------------- */
+
+    protected static function paginador($pagina, $totalRegistros, $url, $itemsPorPagina = 15)
+    {
+        // validacion: pagina debe ser un entero positivo
+        $pagina = (int) $pagina;
+        if ($pagina < 1) {
+            $pagina = 1;
+        }
+
+        // validacion: itemsporpagina debe ser positivo
+        $itemsPorPagina = (int) $itemsPorPagina;
+        if ($itemsPorPagina < 1) {
+            $itemsPorPagina = 15;
+        }
+
+        // calcular total de paginas
+        $totalPaginas = ceil($totalRegistros / $itemsPorPagina);
+        
+        // validacion: si no hay registros, mostrar paginacion vacia
+        if ($totalRegistros == 0) {
+            return '<div class="d-flex justify-content-between align-items-center flex-wrap gap-3" style="padding: var(--space-3) 0;">
+                        <span class="pagination-info">Mostrando 0 de 0 registros</span>
+                        <div class="pagination-nx"></div>
+                    </div>';
+        }
+
+        // validacion: si la pagina excede el total, ajustar
+        if ($pagina > $totalPaginas) {
+            $pagina = $totalPaginas;
+        }
+
+        // calcular el rango de registros que se muestran
+        $inicio = ($pagina - 1) * $itemsPorPagina + 1;
+        $fin = $pagina * $itemsPorPagina;
+        if ($fin > $totalRegistros) {
+            $fin = $totalRegistros;
+        }
+
+        // construir html de paginacion estilo nexus-dashboard
+        $tabla = '<div class="d-flex justify-content-between align-items-center flex-wrap gap-3" style="padding: var(--space-3) 0;">';
+        
+        // informacion de registros
+        $tabla .= '<span class="pagination-info">Mostrando ' . $inicio . '-' . $fin . ' de ' . $totalRegistros . ' registros</span>';
+        
+        // contenedor de botones
+        $tabla .= '<div class="pagination-nx">';
+
+        // boton anterior (disabled en primera pagina)
+        if ($pagina == 1) {
+            $tabla .= '<button class="page-btn" disabled>
+                        <ion-icon name="chevron-back-outline"></ion-icon>
+                       </button>';
+        } else {
+            $tabla .= '<button class="page-btn" onclick="window.location.href=\'' . $url . '&pagina=' . ($pagina - 1) . '\'">
+                        <ion-icon name="chevron-back-outline"></ion-icon>
+                       </button>';
+        }
+
+        // determinar que paginas mostrar
+        $botonesMostrados = 5;
+        $inicioRango = 1;
+        $finRango = $totalPaginas;
+
+        if ($totalPaginas > $botonesMostrados) {
+            $mitad = floor($botonesMostrados / 2);
+            $inicioRango = $pagina - $mitad;
+            $finRango = $pagina + $mitad;
+
+            if ($inicioRango < 1) {
+                $inicioRango = 1;
+                $finRango = $botonesMostrados;
+            }
+
+            if ($finRango > $totalPaginas) {
+                $finRango = $totalPaginas;
+                $inicioRango = $totalPaginas - $botonesMostrados + 1;
+            }
+        }
+
+        // primera pagina y ellipsis si es necesario
+        if ($inicioRango > 1) {
+            $tabla .= '<button class="page-btn" onclick="window.location.href=\'' . $url . '&pagina=1\'">1</button>';
+            if ($inicioRango > 2) {
+                $tabla .= '<span style="color: var(--color-text-muted); font-size: var(--text-sm);">...</span>';
+            }
+        }
+
+        // botones de paginas intermedias
+        for ($i = $inicioRango; $i <= $finRango; $i++) {
+            if ($i == $pagina) {
+                $tabla .= '<button class="page-btn active">' . $i . '</button>';
+            } else {
+                $tabla .= '<button class="page-btn" onclick="window.location.href=\'' . $url . '&pagina=' . $i . '\'">' . $i . '</button>';
+            }
+        }
+
+        // ultima pagina y ellipsis si es necesario
+        if ($finRango < $totalPaginas) {
+            if ($finRango < $totalPaginas - 1) {
+                $tabla .= '<span style="color: var(--color-text-muted); font-size: var(--text-sm);">...</span>';
+            }
+            $tabla .= '<button class="page-btn" onclick="window.location.href=\'' . $url . '&pagina=' . $totalPaginas . '\'">' . $totalPaginas . '</button>';
+        }
+
+        // boton siguiente (disabled en ultima pagina)
+        if ($pagina == $totalPaginas) {
+            $tabla .= '<button class="page-btn" disabled>
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                       </button>';
+        } else {
+            $tabla .= '<button class="page-btn" onclick="window.location.href=\'' . $url . '&pagina=' . ($pagina + 1) . '\'">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                       </button>';
+        }
+
+        $tabla .= '</div></div>';
+
+        return $tabla;
+    }
+
+    /* -----------------------------------------funcion para obtener limit sql para paginacion--------------------------------------------- */
+
+    protected static function obtener_limit($pagina, $itemsPorPagina = 15)
+    {
+        $pagina = (int) $pagina;
+        if ($pagina < 1) {
+            $pagina = 1;
+        }
+
+        $itemsPorPagina = (int) $itemsPorPagina;
+        if ($itemsPorPagina < 1) {
+            $itemsPorPagina = 15;
+        }
+
+        $inicio = ($pagina - 1) * $itemsPorPagina;
+        return "LIMIT $itemsPorPagina OFFSET $inicio";
+    }
+
+    /* -----------------------------------------funcion para validar pagina--------------------------------------------- */
+
+    protected static function validar_pagina($pagina, $totalPaginas = 0)
+    {
+        if (!is_numeric($pagina)) {
+            return 1;
+        }
+
+        $pagina = (int) $pagina;
+
+        if ($pagina < 1) {
+            return 1;
+        }
+
+        if ($totalPaginas > 0 && $pagina > $totalPaginas) {
+            return $totalPaginas;
+        }
+
+        return $pagina;
     }
 
 

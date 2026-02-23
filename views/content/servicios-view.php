@@ -22,7 +22,6 @@
     <div class="table-wrapper">
         <table class="table-nx">
             <colgroup>
-                <col class="col-check" />
                 <col class="col-id" />
                 <col class="col-entity" />
                 <col class="col-priority" />
@@ -33,9 +32,7 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th class="col-check" style="padding-left: var(--space-4)">
-                        <input type="checkbox" />
-                    </th>
+
                     <th class="col-id">ID</th>
                     <th class="col-entity">Servicio</th>
                     <th class="col-priority">Categoria</th>
@@ -49,9 +46,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
-                        <input type="checkbox" />
-                    </td>
+
                     <td class="col-id text-mono text-muted">SER-001</td>
                     <td class="col-entity" title="Servicio de Inyecciones">
                         <div class="entity-cell">
@@ -84,9 +79,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="col-check" style="padding-left: var(--space-4); overflow: visible">
-                        <input type="checkbox" />
-                    </td>
+                    
                     <td class="col-id text-mono text-muted">SER-002</td>
                     <td class="col-entity" title="Servicio de Curaciones">
                         <div class="entity-cell">

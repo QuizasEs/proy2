@@ -1,12 +1,18 @@
-<?php
-                if(isset($_POST['Usuario_log']) && isset($_POST['Password_log'])){
-                    require_once "./controllers/loginController.php";
-                    $ins_login = new loginController();
-                    echo $ins_login->iniciar_sesion_controller();
-                    exit();
-                }
-            ?>
+
             <!---------------------------------------------login--------------------------------------------------->
+            <?php
+            if (isset($_SESSION['error_login'])) {
+                echo '<script>
+                    Swal.fire({
+                        title: "Ocurrio un error",
+                        text: "' . $_SESSION['error_login'] . '",
+                        icon: "error",
+                        confirmButtonText: "Aceptar"
+                    });
+                </script>';
+                unset($_SESSION['error_login']);
+            }
+            ?>
             <div class="login-layout">
                 <div class="login-left">
                     <div class="login-form-container">

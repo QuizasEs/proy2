@@ -34,8 +34,6 @@
             $lc = new loginController();
             if (
                 !isset($_SESSION['token_smp']) ||
-                !isset($_SESSION['apellido_paterno_smp']) ||
-                !isset($_SESSION['apellido_materno_smp']) ||
                 !isset($_SESSION['nombre_smp']) ||
                 !isset($_SESSION['usuario_smp'])
             ) {

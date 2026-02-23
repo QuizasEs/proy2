@@ -5,7 +5,7 @@
         protected static function get_views_model($vistas){
             $listaBlanca=[
                 "dashboard",
-                "clientes",
+                "personal",
                 "servicios",
                 "habilitaciones",
                 "perfil",

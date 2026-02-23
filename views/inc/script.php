@@ -207,11 +207,14 @@
         document.getElementById(id).classList.remove('open');
         document.body.style.overflow = '';
     }
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', function(e) {
-            if (e.target === this) closeModal(this.id);
-        });
-    });
+    
+    // Nota: Click fuera del modal no cierra - behavior deshabilitado
+    // Si se desea habilitar, descomentar lo siguiente:
+    // document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    //     overlay.addEventListener('click', function(e) {
+    //         if (e.target === this) closeModal(this.id);
+    //     });
+    // });
 
     /* pestañas */
     function switchTab(btn, panelId) {
@@ -256,4 +259,16 @@
             this.classList.add('active');
         });
     });
+
+    /* mostrar/ocultar contrasena */
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.innerHTML = '<ion-icon name="eye-off-outline"></ion-icon>';
+        } else {
+            input.type = 'password';
+            btn.innerHTML = '<ion-icon name="eye-outline"></ion-icon>';
+        }
+    }
 </script>

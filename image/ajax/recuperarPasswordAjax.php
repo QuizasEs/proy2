@@ -3,8 +3,8 @@ $peticionAjax = true;
 require_once "../config/APP.php";
 
 if (isset($_POST['Email_recovery'])) {
-    require_once "../controllers/passwordRecoveryController.php";
-    $ins_recuperar = new passwordRecoveryController();
+    require_once "../controllers/loginController.php";
+    $ins_recuperar = new loginController();
 
     if (isset($_POST['Password_new']) && isset($_POST['Password_confirm'])) {
         echo $ins_recuperar->cambiar_password_controller();

@@ -28,17 +28,20 @@
           </button>
           <div style="width: 1px; height: 24px; background: var(--color-border)"></div>
           <div class="navbar-user-info">
-            <span class="navbar-user-name">Admin</span>
-            <span class="navbar-user-role">Rol Admin</span>
+            <?php
+            require_once __DIR__ . "/../../models/userModel.php";
+            $usuario_id = $_SESSION['id_smp'];
+            $datos_usuario = userModel::obtener_usuario($usuario_id);
+            $usuario = $datos_usuario->fetch();
+            ?>
+            <span class="navbar-user-name"><?php echo $usuario['us_nombres'] . ' ' . $usuario['us_apellido_paterno']; ?></span>
+            <span class="navbar-user-role"><?php echo $usuario['us_username']; ?></span>
           </div>
-          <div class="navbar-avatar" onclick="
-                showToast(
-                  'success',
-                  'Perfil',
-                  'Admin — Rol Admin',
-                )
-              ">
-            AJ
-          </div>
+          <a class="navbar-avatar" href="index.php?views=perfil" onclick="activateItem(this)" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <?php
+            $iniciales = strtoupper(substr($usuario['us_nombres'], 0, 1) . substr($usuario['us_apellido_paterno'], 0, 1));
+            echo $iniciales;
+            ?>
+          </a>
         </div>
       </header>

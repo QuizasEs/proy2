@@ -17,4 +17,3 @@ if (isset($_POST['token']) && isset($_POST['usuario'])) {
     header("Location: " . SERVER_URL . "index.php?views=login");
     exit();
 }
-    

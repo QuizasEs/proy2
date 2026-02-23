@@ -96,15 +96,15 @@
         <div class="sidebar-section-label">Gestion planes</div>
 
         <!-- usuarios -->
-        <div class="sidebar-group" data-group="usuarios">
+        <div class="sidebar-group" data-group="personal">
           <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
             <ion-icon name="people-outline" class="sb-icon"></ion-icon>
-            <span class="sb-label">Usuarios</span>
+            <span class="sb-label">personal</span>
             <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
           </button>
           <div class="sidebar-submenu">
-            <span class="flyout-title">Usuarios</span>
-            <a class="sidebar-subitem" href="index.php?views=clientes" onclick="
+            <span class="flyout-title">personal</span>
+            <a class="sidebar-subitem" href="index.php?views=personal" onclick="
                   activateItem(this);
                 ">
               <ion-icon name="list-outline" class="sb-icon"></ion-icon>
@@ -243,14 +243,19 @@
 
       <!-- pie -->
       <div class="sidebar-footer">
-        <div class="sidebar-footer-avatar" onclick="
-              showToast('info', 'usuario', 'usuario')
-            ">
-          AJ
-        </div>
+        <a class="sidebar-footer-avatar" href="index.php?views=perfil" onclick="activateItem(this)" style="text-decoration: none; color: inherit; cursor: pointer;">
+          <?php
+          require_once __DIR__ . "/../../models/userModel.php";
+          $usuario_id = $_SESSION['id_smp'];
+          $datos_usuario = userModel::obtener_usuario($usuario_id);
+          $usuario = $datos_usuario->fetch();
+          $iniciales = strtoupper(substr($usuario['us_nombres'], 0, 1) . substr($usuario['us_apellido_paterno'], 0, 1));
+          echo $iniciales;
+          ?>
+        </a>
         <div class="sidebar-footer-info">
-          <div class="sidebar-footer-name">Admin</div>
-          <div class="sidebar-footer-role">Rol Admin</div>
+          <div class="sidebar-footer-name"><?php echo $usuario['us_nombres'] . ' ' . $usuario['us_apellido_paterno']; ?></div>
+          <div class="sidebar-footer-role"><?php echo $usuario['us_username']; ?></div>
         </div>
       </div>
     </aside>
