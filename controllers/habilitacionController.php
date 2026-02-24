@@ -68,16 +68,24 @@ class habilitacionController extends habilitacionModel
         $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $pagina = mainModel::validar_pagina($pagina);
         
-        $totalRegistros = habilitacionModel::contar_habilitaciones_modelo()->fetch()['total'];
-        $itemsPorPagina = 15;
+        // verificar si se deben mostrar todas las habilitaciones
+        $verTodas = isset($_GET['ver']) && $_GET['ver'] == 'todos';
         
-        $limite = mainModel::obtener_limit($pagina, $itemsPorPagina);
+        if ($verTodas) {
+            $totalRegistros = habilitacionModel::contar_todas_habilitaciones_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_habilitaciones = habilitacionModel::listar_todas_habilitaciones_modelo($limite);
+        } else {
+            $totalRegistros = habilitacionModel::contar_habilitaciones_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_habilitaciones = habilitacionModel::listar_habilitaciones_modelo($limite);
+        }
         
-        $lista_habilitaciones = habilitacionModel::listar_habilitaciones_modelo($limite);
+        // mantener el filtro al cambiar de pagina
+        $verParam = $verTodas ? "&ver=todos" : "";
+        $url = SERVER_URL . "index.php?views=habilitaciones" . $verParam;
         
-        $url = SERVER_URL . "index.php?views=habilitaciones";
-        
-        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, $itemsPorPagina);
+        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, 15);
         
         return array(
             'datos' => $lista_habilitaciones,

@@ -62,16 +62,24 @@ class servicioController extends servicioModel
         $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $pagina = mainModel::validar_pagina($pagina);
         
-        $totalRegistros = servicioModel::contar_servicios_modelo()->fetch()['total'];
-        $itemsPorPagina = 15;
+        // verificar si se deben mostrar todos los servicios
+        $verTodas = isset($_GET['ver']) && $_GET['ver'] == 'todos';
         
-        $limite = mainModel::obtener_limit($pagina, $itemsPorPagina);
+        if ($verTodas) {
+            $totalRegistros = servicioModel::contar_todos_servicios_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_servicios = servicioModel::listar_todos_servicios_modelo($limite);
+        } else {
+            $totalRegistros = servicioModel::contar_servicios_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_servicios = servicioModel::listar_servicios_modelo($limite);
+        }
         
-        $lista_servicios = servicioModel::listar_servicios_modelo($limite);
+        // mantener el filtro al cambiar de pagina
+        $verParam = $verTodas ? "&ver=todos" : "";
+        $url = SERVER_URL . "index.php?views=servicios" . $verParam;
         
-        $url = SERVER_URL . "index.php?views=servicios";
-        
-        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, $itemsPorPagina);
+        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, 15);
         
         return array(
             'datos' => $lista_servicios,

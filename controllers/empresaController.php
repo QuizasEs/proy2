@@ -79,16 +79,24 @@ class empresaController extends empresaModel
         $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $pagina = mainModel::validar_pagina($pagina);
         
-        $totalRegistros = empresaModel::contar_empresas_modelo()->fetch()['total'];
-        $itemsPorPagina = 15;
+        // verificar si se deben mostrar todas las empresas
+        $verTodas = isset($_GET['ver']) && $_GET['ver'] == 'todos';
         
-        $limite = mainModel::obtener_limit($pagina, $itemsPorPagina);
+        if ($verTodas) {
+            $totalRegistros = empresaModel::contar_todas_empresas_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_empresas = empresaModel::listar_todas_empresas_modelo($limite);
+        } else {
+            $totalRegistros = empresaModel::contar_empresas_modelo()->fetch()['total'];
+            $limite = mainModel::obtener_limit($pagina, 15);
+            $lista_empresas = empresaModel::listar_empresas_modelo($limite);
+        }
         
-        $lista_empresas = empresaModel::listar_empresas_modelo($limite);
+        // mantener el filtro al cambiar de pagina
+        $verParam = $verTodas ? "&ver=todos" : "";
+        $url = SERVER_URL . "index.php?views=empresas" . $verParam;
         
-        $url = SERVER_URL . "index.php?views=empresas";
-        
-        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, $itemsPorPagina);
+        $paginacion = mainModel::paginador($pagina, $totalRegistros, $url, 15);
         
         return array(
             'datos' => $lista_empresas,

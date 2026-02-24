@@ -122,4 +122,29 @@ class empresaModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------listar todas las empresas (incluyendo inactivas)----------------------------------- */
+    protected static function listar_todas_empresas_modelo($limite)
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT e.em_id, e.em_nombre, e.em_celular, e.em_nit, e.em_comision, 
+               e.em_creado_en, e.em_estado, u.us_nombres, u.us_apellido_paterno
+        FROM empresas e
+        LEFT JOIN usuarios u ON e.us_id = u.us_id
+        ORDER BY e.em_nombre ASC
+        $limite
+        ");
+        $sql->execute();
+        return $sql;
+    }
+
+    /* -------------------------------contar todas las empresas----------------------------------- */
+    protected static function contar_todas_empresas_modelo()
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT COUNT(em_id) as total FROM empresas
+        ");
+        $sql->execute();
+        return $sql;
+    }
 }

@@ -110,4 +110,29 @@ class servicioModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------listar todos los servicios (incluyendo inactivos)----------------------------------- */
+    protected static function listar_todos_servicios_modelo($limite)
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT s.se_id, s.se_nombre, s.se_descripcion, s.se_tipo_sistema, 
+               s.se_creado_en, s.se_actualizado_en, s.se_estado, u.us_nombres, u.us_apellido_paterno
+        FROM servicios s
+        LEFT JOIN usuarios u ON s.us_id = u.us_id
+        ORDER BY s.se_nombre ASC
+        $limite
+        ");
+        $sql->execute();
+        return $sql;
+    }
+
+    /* -------------------------------contar todos los servicios----------------------------------- */
+    protected static function contar_todos_servicios_modelo()
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT COUNT(se_id) as total FROM servicios
+        ");
+        $sql->execute();
+        return $sql;
+    }
 }

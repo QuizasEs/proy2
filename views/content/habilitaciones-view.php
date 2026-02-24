@@ -19,8 +19,16 @@ $lista_servicios = $ins_habilitacion->listar_servicios_controller();
                 bienvenido de nuevo — <?php echo date('l d M Y'); ?>
             </p>
         </div>
-        <div style="display: flex; gap: var(--space-3);">
-            <button class="btn-nx btn-primary btn-md" onclick="openModal('modalAdd')">
+        <div style="display: flex; gap: var(--space-3); align-items: center;">
+            <label class="switch-nx">
+                <input type="checkbox" 
+                    onchange="location = this.checked ? '<?php echo SERVER_URL; ?>index.php?views=habilitaciones&ver=todos' : '<?php echo SERVER_URL; ?>index.php?views=habilitaciones';" 
+                    <?php echo isset($_GET['ver']) && $_GET['ver'] == 'todos' ? 'checked' : ''; ?> 
+                />
+                <span class="switch-track"></span>
+            </label>
+            <span style="font-size: var(--text-sm);">ver inactivos</span>
+            <button class="btn-nx btn-primary btn-md" onclick="openModal('modalAdd')" style="margin-left: auto;">
                 <ion-icon name="add-outline"></ion-icon>
                 nuevo
             </button>
@@ -44,6 +52,7 @@ $lista_servicios = $ins_habilitacion->listar_servicios_controller();
                     <th class="col-priority">empresa</th>
                     <th class="col-status">suscripcion</th>
                     <th class="col-value">sucursal</th>
+                    <th class="col-status">estado</th>
                     <th class="col-actions" style="text-align: right; padding-right: var(--space-4)">
                         acciones
                     </th>

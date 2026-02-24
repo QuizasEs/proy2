@@ -161,4 +161,34 @@ class habilitacionModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------listar todas las habilitaciones (incluyendo inactivas)----------------------------------- */
+    protected static function listar_todas_habilitaciones_modelo($limite)
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT h.ha_id, h.ha_link_sistema, h.ha_tipo_suscripcion, h.ha_sucursal, 
+               h.ha_creado_en, h.ha_actualizado_en, h.ha_estado,
+               s.se_id, s.se_nombre, s.se_tipo_sistema,
+               e.em_id, e.em_nombre, e.em_nit,
+               u.us_nombres, u.us_apellido_paterno
+        FROM habilitaciones h
+        LEFT JOIN servicios s ON h.se_id = s.se_id
+        LEFT JOIN empresas e ON h.em_id = e.em_id
+        LEFT JOIN usuarios u ON h.us_id = u.us_id
+        ORDER BY h.ha_id DESC
+        $limite
+        ");
+        $sql->execute();
+        return $sql;
+    }
+
+    /* -------------------------------contar todas las habilitaciones----------------------------------- */
+    protected static function contar_todas_habilitaciones_modelo()
+    {
+        $sql = mainModel::conectar()->prepare("
+        SELECT COUNT(ha_id) as total FROM habilitaciones
+        ");
+        $sql->execute();
+        return $sql;
+    }
 }
