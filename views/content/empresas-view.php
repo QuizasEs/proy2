@@ -73,9 +73,11 @@ $paginacion = $resultado['paginacion'];
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="ver" onclick="verEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="eye-outline"></ion-icon>
                             </button>
+                            <?php if ($_SESSION['rol_smp'] == 1) { ?>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="eliminar" style="color: var(--color-danger)" onclick="eliminarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="trash-outline"></ion-icon>
                             </button>
+                            <?php } ?>
                         </div>
                     </td>
                 </tr>

@@ -43,5 +43,8 @@
             echo $iniciales;
             ?>
           </a>
+          <button class="navbar-btn btn-exit-system" title="cerrar sesion">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </button>
         </div>
       </header>

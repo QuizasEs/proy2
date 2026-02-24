@@ -11,6 +11,20 @@ class userController extends userModel
     /* -----------------------------------controlador para agregar usuarios------------------------------------------ */
     public function get_user_controller()
     {
+        session_start(['name' => 'SMP']);
+        $rol = $_SESSION['rol_smp'];
+
+        if ($rol != 1) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Acceso denegado",
+                "texto" => "no tienes permisos para agregar usuarios!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
         /* datos personales */
         $nombres = mainModel::limpiar_cadena($_POST['Nombres_reg']);
         $apellido_paterno = mainModel::limpiar_cadena($_POST['ApellidoPaterno_reg']);
@@ -696,6 +710,20 @@ class userController extends userModel
     /* -----------------------------------controlador para actualizar usuario------------------------------------------ */
     public function actualizar_usuario_controller()
     {
+        session_start(['name' => 'SMP']);
+        $rol = $_SESSION['rol_smp'];
+
+        if ($rol != 1) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Acceso denegado",
+                "texto" => "no tienes permisos para actualizar usuarios!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
         $id = mainModel::decryption($_POST['Usuario_id_up']);
         $nombres = mainModel::limpiar_cadena($_POST['nombres']);
         $apellido_paterno = mainModel::limpiar_cadena($_POST['apellido_paterno']);
@@ -780,6 +808,20 @@ class userController extends userModel
     /* -----------------------------------controlador para eliminar usuario------------------------------------------ */
     public function eliminar_usuario_controller()
     {
+        session_start(['name' => 'SMP']);
+        $rol = $_SESSION['rol_smp'];
+
+        if ($rol != 1) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Acceso denegado",
+                "texto" => "no tienes permisos para eliminar usuarios!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
         $id = mainModel::decryption($_POST['id']);
 
         if ($id == "") {

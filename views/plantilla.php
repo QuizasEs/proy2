@@ -44,6 +44,7 @@
             <?php include_once "inc/sidebar.php"; ?>
             <main class="main-content" id="mainContent">
                 <?php include_once "inc/navbar.php"; ?>
+                <?php include_once "inc/logOut.php"; ?>
                 <!---------------------------------------------Cuerpo principal--------------------------------------------------->
                 
                     <!--------------------------------------------- contenido de platillas y vistas--------------------------------------------------->

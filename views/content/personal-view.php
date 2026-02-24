@@ -1,4 +1,12 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(['name' => 'SMP']);
+}
+if (!isset($_SESSION['rol_smp']) || $_SESSION['rol_smp'] != 1) {
+    echo "<script>window.location.href='" . SERVER_URL . "index.php?views=404';</script>";
+    exit();
+}
+
 require_once __DIR__ . "/../../controllers/userController.php";
 $ins_personal = new userController();
 $resultado = $ins_personal->listar_personal_controller();
@@ -17,10 +25,12 @@ $lista_roles = $ins_personal->listar_roles_controller();
             </p>
         </div>
         <div style="display: flex; gap: var(--space-3);">
+            <?php if ($_SESSION['rol_smp'] == 1) { ?>
             <button class="btn-nx btn-primary btn-md" onclick="openModal('modalAdd')">
                 <ion-icon name="add-outline"></ion-icon>
                 Nuevo
             </button>
+            <?php } ?>
         </div>
     </div>
 
@@ -75,14 +85,16 @@ $lista_roles = $ins_personal->listar_roles_controller();
                     </td>
                     <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
                         <div style="display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2);">
+                            <?php if ($_SESSION['rol_smp'] == 1) { ?>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="Editar" onclick="editarPersonal('<?php echo mainModel::encryption($row['us_id']); ?>')">
                                 <ion-icon name="create-outline"></ion-icon>
                             </button>
-                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Ver" onclick="verPersonal('<?php echo mainModel::encryption($row['us_id']); ?>')">
-                                <ion-icon name="eye-outline"></ion-icon>
-                            </button>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="Eliminar" style="color: var(--color-danger)" onclick="eliminarPersonal('<?php echo mainModel::encryption($row['us_id']); ?>')">
                                 <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                            <?php } ?>
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Ver" onclick="verPersonal('<?php echo mainModel::encryption($row['us_id']); ?>')">
+                                <ion-icon name="eye-outline"></ion-icon>
                             </button>
                         </div>
                     </td>

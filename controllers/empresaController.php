@@ -172,6 +172,20 @@ class empresaController extends empresaModel
     /* -----------------------------------controlador para eliminar empresa------------------------------------------ */
     public function eliminar_empresa_controller()
     {
+        session_start(['name' => 'SMP']);
+        $rol = $_SESSION['rol_smp'];
+
+        if ($rol == 2) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Acceso denegado",
+                "texto" => "no tienes permisos para eliminar empresas!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
         $id = mainModel::decryption($_POST['id']);
 
         if ($id == "") {

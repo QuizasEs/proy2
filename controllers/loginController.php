@@ -61,10 +61,20 @@ class loginController extends loginModel
             return header("Location: " . SERVER_URL . "index.php?views=login");
         }
     }
-    /* controlador que nos permite secarra secion */
+    /* controlador que nos permite cerrar sesion */
     public function cerrar_sesion_controller()
     {
         session_start(['name' => 'SMP']);
+        
+        if (!isset($_SESSION['token_smp']) || !isset($_SESSION['usuario_smp'])) {
+            $alerta = [
+                "Alerta" => "redireccionar",
+                "URL" => SERVER_URL . "index.php?views=login",
+            ];
+            echo json_encode($alerta);
+            return;
+        }
+        
         $token = mainModel::decryption($_POST['token']);
         $usuario = mainModel::decryption($_POST['usuario']);
 
@@ -79,7 +89,7 @@ class loginController extends loginModel
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",
-                "Texto" => "No se pudo serrar la sesion del sistema",
+                "Texto" => "No se pudo cerrar la sesion del sistema",
                 "Tipo" => "error"
             ];
         }
