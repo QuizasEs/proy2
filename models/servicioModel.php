@@ -33,9 +33,10 @@ class servicioModel extends mainModel
     {
         $sql = mainModel::conectar()->prepare("
         SELECT s.se_id, s.se_nombre, s.se_descripcion, s.se_tipo_sistema, 
-               s.se_creado_en, s.se_actualizado_en, u.us_nombres, u.us_apellido_paterno
+               s.se_creado_en, s.se_actualizado_en, s.se_estado, u.us_nombres, u.us_apellido_paterno
         FROM servicios s
         LEFT JOIN usuarios u ON s.us_id = u.us_id
+        WHERE s.se_estado = 1
         ORDER BY s.se_nombre ASC
         $limite
         ");
@@ -48,6 +49,7 @@ class servicioModel extends mainModel
         $sql = mainModel::conectar()->prepare("
         SELECT COUNT(se_id) as total
         FROM servicios
+        WHERE se_estado = 1
         ");
         $sql->execute();
         return $sql;
@@ -90,6 +92,19 @@ class servicioModel extends mainModel
     {
         $sql = mainModel::conectar()->prepare("
         DELETE FROM servicios WHERE se_id = :id
+        ");
+        $sql->bindParam(":id", $id);
+        $sql->execute();
+        return $sql;
+    }
+
+    protected static function desactivar_servicio_modelo($id)
+    {
+        $sql = mainModel::conectar()->prepare("
+        UPDATE servicios SET
+            se_estado = 0,
+            se_actualizado_en = NOW()
+        WHERE se_id = :id
         ");
         $sql->bindParam(":id", $id);
         $sql->execute();

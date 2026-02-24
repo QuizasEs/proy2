@@ -588,7 +588,7 @@ a:hover {
     width: 30px;
     height: 30px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+    background: var(--blue-500);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -754,7 +754,7 @@ a:hover {
     width: 32px;
     height: 32px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+    background: var(--blue-500);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1005,7 +1005,7 @@ a:hover {
 /* sparkline placeholder */
 .sparkline {
     height: 48px;
-    background: linear-gradient(to right, transparent, var(--color-primary-muted));
+    background: var(--color-primary-muted);
     border-radius: var(--radius-md);
     position: relative;
     overflow: hidden;
@@ -1390,7 +1390,7 @@ a:hover {
     width: 28px;
     height: 28px;
     border-radius: var(--radius-sm);
-    background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+    background: var(--blue-600);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1837,7 +1837,7 @@ select.form-control-nx {
     border-radius: var(--radius-full);
     border: 2px solid var(--color-surface);
     margin-right: -8px;
-    background: linear-gradient(135deg, var(--blue-400), var(--blue-700));
+    background: var(--blue-700);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1867,7 +1867,7 @@ select.form-control-nx {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--blue-400), var(--blue-600), var(--blue-400));
+    background: var(--blue-600);
     animation: chartPulse 3s ease-in-out infinite;
 }
 
@@ -2202,7 +2202,7 @@ select.form-control-nx {
     display: flex;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    background: var(--blue-600);
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -2215,7 +2215,7 @@ select.form-control-nx {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    background: var(--blue-600);
     padding: 0;
 }
 

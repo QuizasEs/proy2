@@ -30,6 +30,7 @@ $paginacion = $resultado['paginacion'];
                 <col class="col-entity" />
                 <col class="col-priority" />
                 <col class="col-status" />
+                <col class="col-value" />
                 <col class="col-actions" />
             </colgroup>
             <thead>
@@ -38,6 +39,7 @@ $paginacion = $resultado['paginacion'];
                     <th class="col-entity">servicio</th>
                     <th class="col-priority">tipo</th>
                     <th class="col-status">creado</th>
+                    <th class="col-value">estado</th>
                     <th class="col-actions" style="text-align: right; padding-right: var(--space-4)">
                         acciones
                     </th>
@@ -60,6 +62,13 @@ $paginacion = $resultado['paginacion'];
                     <td class="col-status text-muted" style="font-size: var(--text-xs)">
                         <?php echo date('d/m/Y', strtotime($row['se_creado_en'])); ?>
                     </td>
+                    <td class="col-value">
+                        <?php if ($row['se_estado'] == 1) { ?>
+                        <span class="badge-nx badge-green"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>activo</span>
+                        <?php } else { ?>
+                        <span class="badge-nx badge-red"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>inactivo</span>
+                        <?php } ?>
+                    </td>
                     <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
                         <div style="display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2);">
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="editar" onclick="editarServicio('<?php echo mainModel::encryption($row['se_id']); ?>')">
@@ -67,6 +76,9 @@ $paginacion = $resultado['paginacion'];
                             </button>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="ver" onclick="verServicio('<?php echo mainModel::encryption($row['se_id']); ?>')">
                                 <ion-icon name="eye-outline"></ion-icon>
+                            </button>
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="desactivar" style="color: var(--color-warning)" onclick="desactivarServicio('<?php echo mainModel::encryption($row['se_id']); ?>')">
+                                <ion-icon name="power-outline"></ion-icon>
                             </button>
                             <?php if ($_SESSION['rol_smp'] == 1) { ?>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="eliminar" style="color: var(--color-danger)" onclick="eliminarServicio('<?php echo mainModel::encryption($row['se_id']); ?>')">
@@ -219,6 +231,12 @@ $paginacion = $resultado['paginacion'];
                         <div id="view_actualizado">-</div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group-nx">
+                        <label class="form-label-nx">estado</label>
+                        <div id="view_estado">-</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer-nx">
@@ -248,6 +266,32 @@ $paginacion = $resultado['paginacion'];
                 <input type="hidden" name="id" id="delete_id">
                 <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalConfirm')">cancelar</button>
                 <button type="submit" class="btn-nx btn-danger btn-md">eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- modal desactivar -->
+<div class="modal-overlay" id="modalDesactivar">
+    <div class="modal-nx" style="max-width: 420px">
+        <div class="modal-header-nx">
+            <h3 class="modal-title-nx">desactivar servicio</h3>
+            <button class="modal-close" onclick="closeModal('modalDesactivar')">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <form class="FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/servicioAjax.php" method="POST" data-form="delete" autocomplete="off">
+            <div class="modal-body-nx" style="text-align: center">
+                <div style="display:flex;justify-content:center;margin-bottom:16px;">
+                    <ion-icon name="power-outline" style="font-size:48px;color:var(--color-warning);"></ion-icon>
+                </div>
+                <p>esta seguro de desactivar este servicio? podra reactivarlo mas adelante.</p>
+            </div>
+            <div class="modal-footer-nx">
+                <input type="hidden" name="desactivar_servicio" value="1">
+                <input type="hidden" name="id" id="desactivar_id">
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalDesactivar')">cancelar</button>
+                <button type="submit" class="btn-nx btn-warning btn-md">desactivar</button>
             </div>
         </form>
     </div>
@@ -290,6 +334,7 @@ $paginacion = $resultado['paginacion'];
             document.getElementById('view_usuario').textContent = (data.us_nombres || '') + ' ' + (data.us_apellido_paterno || '');
             document.getElementById('view_fecha').textContent = data.se_creado_en;
             document.getElementById('view_actualizado').textContent = data.se_actualizado_en;
+            document.getElementById('view_estado').innerHTML = data.se_estado == 1 ? '<span class="badge-nx badge-green"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>activo</span>' : '<span class="badge-nx badge-red"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>inactivo</span>';
             openModal('modalView');
         })
         .catch(error => console.error('error:', error));
@@ -298,5 +343,10 @@ $paginacion = $resultado['paginacion'];
     function eliminarServicio(id) {
         document.getElementById('delete_id').value = id;
         openModal('modalConfirm');
+    }
+
+    function desactivarServicio(id) {
+        document.getElementById('desactivar_id').value = id;
+        openModal('modalDesactivar');
     }
 </script>

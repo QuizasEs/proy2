@@ -38,9 +38,10 @@ class empresaModel extends mainModel
     {
         $sql = mainModel::conectar()->prepare("
         SELECT e.em_id, e.em_nombre, e.em_celular, e.em_nit, e.em_comision, 
-               e.em_creado_en, u.us_nombres, u.us_apellido_paterno
+               e.em_creado_en, e.em_estado, u.us_nombres, u.us_apellido_paterno
         FROM empresas e
         LEFT JOIN usuarios u ON e.us_id = u.us_id
+        WHERE e.em_estado = 1
         ORDER BY e.em_nombre ASC
         $limite
         ");
@@ -54,6 +55,7 @@ class empresaModel extends mainModel
         $sql = mainModel::conectar()->prepare("
         SELECT COUNT(em_id) as total
         FROM empresas
+        WHERE em_estado = 1
         ");
         $sql->execute();
         return $sql;
@@ -101,6 +103,20 @@ class empresaModel extends mainModel
     {
         $sql = mainModel::conectar()->prepare("
         DELETE FROM empresas WHERE em_id = :id
+        ");
+        $sql->bindParam(":id", $id);
+        $sql->execute();
+        return $sql;
+    }
+
+    /* -------------------------------desactivar empresa----------------------------------- */
+    protected static function desactivar_empresa_modelo($id)
+    {
+        $sql = mainModel::conectar()->prepare("
+        UPDATE empresas SET
+            em_estado = 0,
+            em_actualizado_en = NOW()
+        WHERE em_id = :id
         ");
         $sql->bindParam(":id", $id);
         $sql->execute();

@@ -92,6 +92,24 @@
           </div>
         </div>
 
+        <!-- habilitaciones -->
+        <div class="sidebar-group" data-group="habilitaciones">
+          <button class="sb-row sidebar-group-trigger" onclick="toggleGroup(this)">
+            <ion-icon name="checkbox-outline" class="sb-icon"></ion-icon>
+            <span class="sb-label">Habilitaciones</span>
+            <ion-icon name="chevron-forward-outline" class="sb-chevron"></ion-icon>
+          </button>
+          <div class="sidebar-submenu">
+            <span class="flyout-title">Lista</span>
+            <a class="sidebar-subitem" href="index.php?views=habilitaciones" onclick="
+                  activateItem(this);
+                ">
+              <ion-icon name="list-outline" class="sb-icon"></ion-icon>
+              <span class="sb-label">Lista</span>
+            </a>
+          </div>
+        </div>
+
         <!-- gestion -->
         <div class="sidebar-section-label">Gestion planes</div>
 

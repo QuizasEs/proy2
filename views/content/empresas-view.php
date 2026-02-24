@@ -60,7 +60,11 @@ $paginacion = $resultado['paginacion'];
                     </td>
                     <td class="col-priority text-mono"><?php echo $row['em_nit']; ?></td>
                     <td class="col-status">
+                        <?php if ($row['em_estado'] == 1) { ?>
                         <span class="badge-nx badge-green"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>activo</span>
+                        <?php } else { ?>
+                        <span class="badge-nx badge-red"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>inactivo</span>
+                        <?php } ?>
                     </td>
                     <td class="col-value text-mono" style="font-weight: var(--fw-semi)">
                         <?php echo $row['em_comision']; ?>%
@@ -72,6 +76,9 @@ $paginacion = $resultado['paginacion'];
                             </button>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="ver" onclick="verEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="eye-outline"></ion-icon>
+                            </button>
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="desactivar" style="color: var(--color-warning)" onclick="desactivarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                                <ion-icon name="power-outline"></ion-icon>
                             </button>
                             <?php if ($_SESSION['rol_smp'] == 1) { ?>
                             <button class="btn-nx btn-icon btn-ghost btn-sm" title="eliminar" style="color: var(--color-danger)" onclick="eliminarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
@@ -234,6 +241,12 @@ $paginacion = $resultado['paginacion'];
                         <div id="view_fecha">-</div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group-nx">
+                        <label class="form-label-nx">estado</label>
+                        <div id="view_estado">-</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer-nx">
@@ -260,6 +273,29 @@ $paginacion = $resultado['paginacion'];
             <div class="modal-footer-nx">
                 <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalConfirm')">cancelar</button>
                 <button type="submit" class="btn-nx btn-danger btn-md">eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- modal desactivar -->
+<div class="modal-overlay" id="modalDesactivar">
+    <div class="modal-nx" style="max-width: 420px">
+        <div class="modal-header-nx">
+            <h3 class="modal-title-nx">desactivar empresa</h3>
+            <button class="modal-close" onclick="closeModal('modalDesactivar')">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <form class="FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/empresaAjax.php" method="POST" data-form="delete" autocomplete="off">
+            <div class="modal-body-nx">
+                <input type="hidden" name="desactivar_empresa" value="1">
+                <input type="hidden" name="id" id="desactivar_id">
+                <p>esta seguro de desactivar esta empresa? podra reactivarla mas adelante.</p>
+            </div>
+            <div class="modal-footer-nx">
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalDesactivar')">cancelar</button>
+                <button type="submit" class="btn-nx btn-warning btn-md">desactivar</button>
             </div>
         </form>
     </div>
@@ -302,6 +338,7 @@ $paginacion = $resultado['paginacion'];
             document.getElementById('view_comision').textContent = (data.em_comision || 0) + '%';
             document.getElementById('view_usuario').textContent = data.us_nombres ? data.us_nombres + ' ' + data.us_apellido_paterno : '-';
             document.getElementById('view_fecha').textContent = data.em_creado_en;
+            document.getElementById('view_estado').innerHTML = data.em_estado == 1 ? '<span class="badge-nx badge-green"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>activo</span>' : '<span class="badge-nx badge-red"><ion-icon name="ellipse" style="font-size: 8px"></ion-icon>inactivo</span>';
             openModal('modalView');
         });
     }
@@ -309,5 +346,10 @@ $paginacion = $resultado['paginacion'];
     function eliminarEmpresa(id) {
         document.getElementById('delete_id').value = id;
         openModal('modalConfirm');
+    }
+
+    function desactivarEmpresa(id) {
+        document.getElementById('desactivar_id').value = id;
+        openModal('modalDesactivar');
     }
 </script>

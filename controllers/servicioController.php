@@ -187,4 +187,42 @@ class servicioController extends servicioModel
             exit();
         }
     }
+
+    public function desactivar_servicio_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo desactivar el servicio!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $desactivar = servicioModel::desactivar_servicio_modelo($id);
+
+        if ($desactivar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "servicio desactivado",
+                "texto" => "el servicio se ha desactivado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo desactivar el servicio!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
 }

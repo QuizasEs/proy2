@@ -25,6 +25,13 @@ if (isset($_POST['eliminar_servicio']) && isset($_POST['id'])) {
     exit();
 }
 
+if (isset($_POST['desactivar_servicio']) && isset($_POST['id'])) {
+    require_once "../controllers/servicioController.php";
+    $ins_servicio = new servicioController();
+    echo $ins_servicio->desactivar_servicio_controller();
+    exit();
+}
+
 if (isset($_POST['obtener_servicio']) && isset($_POST['id'])) {
     require_once "../controllers/servicioController.php";
     $ins_servicio = new servicioController();

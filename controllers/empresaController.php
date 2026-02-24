@@ -221,4 +221,43 @@ class empresaController extends empresaModel
             exit();
         }
     }
+
+    /* -----------------------------------controlador para desactivar empresa------------------------------------------ */
+    public function desactivar_empresa_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo desactivar la empresa!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $desactivar = empresaModel::desactivar_empresa_modelo($id);
+
+        if ($desactivar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "empresa desactivada",
+                "texto" => "la empresa se ha desactivado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "ocurrio un error inesperado",
+                "texto" => "no se pudo desactivar la empresa!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
 }
