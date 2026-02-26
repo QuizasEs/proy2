@@ -50,7 +50,7 @@ class userController extends userModel
         if ($nombres == "" || $apellido_paterno == "" || $apellido_materno == "" || $usuarioName == "" || $password == "" || $password_confirm == "" || $rol == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
@@ -64,7 +64,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $nombres)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El NOMBRE no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -75,7 +75,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_paterno)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El APELLIDO PATERNO no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -86,7 +86,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_materno)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El APELLIDO MATERNO no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -97,7 +97,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[0-9]{6,20}", $carnet)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El Carnet no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -109,7 +109,7 @@ class userController extends userModel
             if (mainModel::verificar_datos("[0-9]{6,20}", $telefono)) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "El Telefono no coincide con el formato solicitado!",
                     "Tipo" => "error"
                 ];
@@ -121,7 +121,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_]{3,100}$", $usuarioName)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El USERNAME no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -135,7 +135,7 @@ class userController extends userModel
         ) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "Las Contraseñas no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -150,7 +150,7 @@ class userController extends userModel
         if ($check_carnet->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El NUMERO DE CARNET ya se encuentra registrado, por favor ingrese otro!",
                 "Tipo" => "error"
             ];
@@ -162,7 +162,7 @@ class userController extends userModel
         if ($check_usuario->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El USUARIO ya se encuentra registrado, por favor ingrese otro!",
                 "Tipo" => "error"
             ];
@@ -176,7 +176,7 @@ class userController extends userModel
                 if ($check_correo->rowCount() > 0) {
                     $alerta = [
                         "Alerta" => "simple",
-                        "Titulo" => "ocurrio un error inesperado",
+                        "Titulo" => "Ocurrio un error inesperado",
                         "texto" => "El correo ya se encuentra registrado, por favor ingrese otro!",
                         "Tipo" => "error"
                     ];
@@ -186,7 +186,7 @@ class userController extends userModel
             } else {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "Has ingresado un correo no valido!",
                     "Tipo" => "error"
                 ];
@@ -200,7 +200,7 @@ class userController extends userModel
         if ($password != $password_confirm) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "Las CONTRASEÑAS no coinciden, intente nuevamente!",
                 "Tipo" => "error"
             ];
@@ -213,7 +213,7 @@ class userController extends userModel
         if ($rol < 1 || $rol > 3) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El ROL seleccionado no es valido!",
                 "Tipo" => "error"
             ];
@@ -246,7 +246,7 @@ class userController extends userModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "No se ha podido registrar el usuario, por favor intente nuevamente!",
                 "Tipo" => "error"
             ];
@@ -426,7 +426,7 @@ class userController extends userModel
         if ($nombres == "" || $apellido_paterno == "" || $apellido_materno == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
@@ -437,7 +437,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $nombres)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El NOMBRE no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -448,7 +448,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_paterno)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El APELLIDO PATERNO no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -459,7 +459,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ]{3,100}", $apellido_materno)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El APELLIDO MATERNO no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -471,7 +471,7 @@ class userController extends userModel
             if (mainModel::verificar_datos("[0-9]{6,20}", $carnet)) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "El Carnet no coincide con el formato solicitado!",
                     "Tipo" => "error"
                 ];
@@ -484,7 +484,7 @@ class userController extends userModel
             if (mainModel::verificar_datos("[0-9]{6,20}", $telefono)) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "El Telefono no coincide con el formato solicitado!",
                     "Tipo" => "error"
                 ];
@@ -497,7 +497,7 @@ class userController extends userModel
             if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "Has ingresado un correo no valido!",
                     "Tipo" => "error"
                 ];
@@ -531,7 +531,7 @@ class userController extends userModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "No se ha podido actualizar el perfil, por favor intente nuevamente!",
                 "Tipo" => "error"
             ];
@@ -552,7 +552,7 @@ class userController extends userModel
         if ($nuevo_usuario == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se ha ingresado el nuevo nombre de usuario!",
                 "Tipo" => "error"
             ];
@@ -563,7 +563,7 @@ class userController extends userModel
         if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_]{3,50}", $nuevo_usuario)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "el nombre de usuario no coincide con el formato solicitado!",
                 "Tipo" => "error"
             ];
@@ -576,7 +576,7 @@ class userController extends userModel
         if ($verificar_usuario->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "el nombre de usuario ya esta en uso por otro usuario!",
                 "Tipo" => "error"
             ];
@@ -593,7 +593,7 @@ class userController extends userModel
             if ($password_actual == "") {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "debe ingresar la contraseña actual para cambiar la contraseña!",
                     "Tipo" => "error"
                 ];
@@ -606,7 +606,7 @@ class userController extends userModel
             if ($password_actual_encrypted != $password_actual_hash) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "la contraseña actual es incorrecta!",
                     "Tipo" => "error"
                 ];
@@ -617,7 +617,7 @@ class userController extends userModel
             if ($nuevo_password != $confirmar_password) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "las nuevas contraseñas no coinciden!",
                     "Tipo" => "error"
                 ];
@@ -628,7 +628,7 @@ class userController extends userModel
             if (mainModel::verificar_datos("[A-Za-zÁÉÍÓÚáéíóúÑñ0-9@$!%*?&._#]{3,100}", $nuevo_password)) {
                 $alerta = [
                     "Alerta" => "simple",
-                    "Titulo" => "ocurrio un error inesperado",
+                    "Titulo" => "Ocurrio un error inesperado",
                     "texto" => "la nueva contraseña no coincide con el formato solicitado!",
                     "Tipo" => "error"
                 ];
@@ -660,7 +660,7 @@ class userController extends userModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se han realizado cambios en las credenciales!",
                 "Tipo" => "error"
             ];
@@ -740,7 +740,7 @@ class userController extends userModel
         if ($id == "" || $nombres == "" || $apellido_paterno == "" || $apellido_materno == "" || $username == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
@@ -753,7 +753,7 @@ class userController extends userModel
         if ($check_usuario->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "El USUARIO ya se encuentra registrado!",
                 "Tipo" => "error"
             ];
@@ -796,7 +796,7 @@ class userController extends userModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se pudo actualizar el usuario!",
                 "Tipo" => "error"
             ];
@@ -827,7 +827,7 @@ class userController extends userModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se ha especificado el usuario a eliminar!",
                 "Tipo" => "error"
             ];
@@ -849,7 +849,7 @@ class userController extends userModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
+                "Titulo" => "Ocurrio un error inesperado",
                 "texto" => "no se pudo eliminar el usuario!",
                 "Tipo" => "error"
             ];

@@ -22,8 +22,8 @@ class habilitacionController extends habilitacionModel
         if ($servicio == "" || $empresa == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -44,8 +44,8 @@ class habilitacionController extends habilitacionModel
         if ($agregar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "habilitacion registrada",
-                "texto" => "la habilitacion se ha registrado exitosamente!",
+                "Titulo" => "Habilitación registrada",
+                "texto" => "La habilitación se ha registrado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -53,8 +53,8 @@ class habilitacionController extends habilitacionModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se ha podido registrar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se ha podido registrar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -115,8 +115,8 @@ class habilitacionController extends habilitacionModel
         if ($id == "" || $servicio == "" || $empresa == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -137,8 +137,8 @@ class habilitacionController extends habilitacionModel
         if ($actualizar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "habilitacion actualizada",
-                "texto" => "los datos de la habilitacion se han actualizado exitosamente!",
+                "Titulo" => "Habilitación actualizada",
+                "texto" => "Los datos de la habilitación se han actualizado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -146,8 +146,8 @@ class habilitacionController extends habilitacionModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo actualizar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo actualizar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -165,7 +165,7 @@ class habilitacionController extends habilitacionModel
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Acceso denegado",
-                "texto" => "no tienes permisos para eliminar habilitaciones!",
+                "texto" => "No tienes permisos para eliminar habilitaciones!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -177,8 +177,8 @@ class habilitacionController extends habilitacionModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -190,8 +190,8 @@ class habilitacionController extends habilitacionModel
         if ($eliminar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "habilitacion eliminada",
-                "texto" => "la habilitacion se ha eliminado exitosamente!",
+                "Titulo" => "Habilitación eliminada",
+                "texto" => "La habilitación se ha eliminado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -199,8 +199,8 @@ class habilitacionController extends habilitacionModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -216,8 +216,8 @@ class habilitacionController extends habilitacionModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -229,8 +229,8 @@ class habilitacionController extends habilitacionModel
         if ($desactivar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "habilitacion desactivada",
-                "texto" => "la habilitacion se ha desactivado exitosamente!",
+                "Titulo" => "Habilitación desactivada",
+                "texto" => "La habilitación se ha desactivado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -238,8 +238,47 @@ class habilitacionController extends habilitacionModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar la habilitacion!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar la habilitación!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para activar habilitacion------------------------------------------ */
+    public function activar_habilitacion_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar la habilitación!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $activar = habilitacionModel::activar_habilitacion_modelo($id);
+
+        if ($activar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "Habilitación activada",
+                "texto" => "La habilitación se ha activado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar la habilitación!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);

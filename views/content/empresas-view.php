@@ -12,7 +12,7 @@ $paginacion = $resultado['paginacion'];
         <div>
             <h1 class="page-title">Empresas</h1>
             <p class="page-subtitle">
-                bienvenido de nuevo — <?php echo date('l d M Y'); ?>
+                Bienvenido de nuevo — <?php echo date('l d M Y'); ?>
             </p>
         </div>
         <div style="display: flex; gap: var(--space-3); align-items: center;">
@@ -23,10 +23,10 @@ $paginacion = $resultado['paginacion'];
                 />
                 <span class="switch-track"></span>
             </label>
-            <span style="font-size: var(--text-sm);">ver inactivos</span>
+            <span style="font-size: var(--text-sm);">Ver inactivos</span>
             <button class="btn-nx btn-primary btn-md" onclick="openModal('modalAdd')" style="margin-left: auto;">
                 <ion-icon name="add-outline"></ion-icon>
-                nuevo
+                Nuevo
             </button>
         </div>
     </div>
@@ -44,12 +44,12 @@ $paginacion = $resultado['paginacion'];
             <thead>
                 <tr>
                     <th class="col-id">id</th>
-                    <th class="col-entity">empresa</th>
-                    <th class="col-priority">nit</th>
-                    <th class="col-status">estado</th>
-                    <th class="col-value">comision</th>
+                    <th class="col-entity">Empresa</th>
+                    <th class="col-priority">NIT</th>
+                    <th class="col-status">Estado</th>
+                    <th class="col-value">Comisión</th>
                     <th class="col-actions" style="text-align: right; padding-right: var(--space-4)">
-                        acciones
+                        Acciones
                     </th>
                 </tr>
             </thead>
@@ -59,7 +59,7 @@ $paginacion = $resultado['paginacion'];
                     <td class="col-id text-mono text-muted"><?php echo $row['em_id']; ?></td>
                     <td class="col-entity" title="<?php echo $row['em_nombre']; ?>">
                         <div class="entity-cell">
-                            <div class="entity-avatar"><?php echo strtoupper(substr($row['em_nombre'], 0, 2)); ?></div>
+                            
                             <div>
                                 <span class="entity-name"><?php echo $row['em_nombre']; ?></span>
                                 <div class="text-muted" style="font-size: var(--text-xs);"><?php echo $row['em_celular']; ?></div>
@@ -79,17 +79,23 @@ $paginacion = $resultado['paginacion'];
                     </td>
                     <td class="col-actions" style="text-align: right; padding-right: var(--space-4)">
                         <div style="display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2);">
-                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="editar" onclick="editarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Editar" onclick="editarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="create-outline"></ion-icon>
                             </button>
-                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="ver" onclick="verEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Ver" onclick="verEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="eye-outline"></ion-icon>
                             </button>
-                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="desactivar" style="color: var(--color-warning)" onclick="desactivarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                            <?php if ($row['em_estado'] == 1) { ?>
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Desactivar" style="color: var(--color-warning)" onclick="desactivarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="power-outline"></ion-icon>
                             </button>
+                            <?php } else { ?>
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Activar" style="color: var(--color-success)" onclick="activarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                                <ion-icon name="power"></ion-icon>
+                            </button>
+                            <?php } ?>
                             <?php if ($_SESSION['rol_smp'] == 1) { ?>
-                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="eliminar" style="color: var(--color-danger)" onclick="eliminarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
+                            <button class="btn-nx btn-icon btn-ghost btn-sm" title="Eliminar" style="color: var(--color-danger)" onclick="eliminarEmpresa('<?php echo mainModel::encryption($row['em_id']); ?>')">
                                 <ion-icon name="trash-outline"></ion-icon>
                             </button>
                             <?php } ?>
@@ -109,7 +115,7 @@ $paginacion = $resultado['paginacion'];
 <div class="modal-overlay" id="modalAdd">
     <div class="modal-nx">
         <div class="modal-header-nx">
-            <h3 class="modal-title-nx">agregar empresa</h3>
+            <h3 class="modal-title-nx">Agregar empresa</h3>
             <button class="modal-close" onclick="closeModal('modalAdd')">
                 <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -121,33 +127,33 @@ $paginacion = $resultado['paginacion'];
                 <div class="row g-3">
                     <div class="col-12">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">nombre <span style="color: var(--color-danger)">*</span></label>
+                            <label class="form-label-nx">Nombre <span style="color: var(--color-danger)">*</span></label>
                             <input class="form-control-nx" type="text" name="nombre" required />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">nit <span style="color: var(--color-danger)">*</span></label>
+                            <label class="form-label-nx">NIT <span style="color: var(--color-danger)">*</span></label>
                             <input class="form-control-nx" type="text" name="nit" required />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">celular</label>
+                            <label class="form-label-nx">Celular</label>
                             <input class="form-control-nx" type="text" name="celular" />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">comision (%)</label>
+                            <label class="form-label-nx">Comisión (%)</label>
                             <input class="form-control-nx" type="number" name="comision" value="0" min="0" max="100" step="0.01" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer-nx">
-                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalAdd')">cancelar</button>
-                <button type="submit" class="btn-nx btn-primary btn-md">guardar</button>
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalAdd')">Cancelar</button>
+                <button type="submit" class="btn-nx btn-success btn-md">Guardar</button>
             </div>
         </form>
     </div>
@@ -157,7 +163,7 @@ $paginacion = $resultado['paginacion'];
 <div class="modal-overlay" id="modalEdit">
     <div class="modal-nx">
         <div class="modal-header-nx">
-            <h3 class="modal-title-nx">editar empresa</h3>
+            <h3 class="modal-title-nx">Editar empresa</h3>
             <button class="modal-close" onclick="closeModal('modalEdit')">
                 <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -170,33 +176,33 @@ $paginacion = $resultado['paginacion'];
                 <div class="row g-3">
                     <div class="col-12">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">nombre <span style="color: var(--color-danger)">*</span></label>
+                            <label class="form-label-nx">Nombre <span style="color: var(--color-danger)">*</span></label>
                             <input class="form-control-nx" type="text" name="nombre" id="edit_nombre" required />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">nit <span style="color: var(--color-danger)">*</span></label>
+                            <label class="form-label-nx">NIT <span style="color: var(--color-danger)">*</span></label>
                             <input class="form-control-nx" type="text" name="nit" id="edit_nit" required />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">celular</label>
+                            <label class="form-label-nx">Celular</label>
                             <input class="form-control-nx" type="text" name="celular" id="edit_celular" />
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group-nx">
-                            <label class="form-label-nx">comision (%)</label>
+                            <label class="form-label-nx">Comisión (%)</label>
                             <input class="form-control-nx" type="number" name="comision" id="edit_comision" min="0" max="100" step="0.01" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer-nx">
-                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalEdit')">cancelar</button>
-                <button type="submit" class="btn-nx btn-primary btn-md">actualizar</button>
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalEdit')">Cancelar</button>
+                <button type="submit" class="btn-nx btn-success btn-md">Actualizar</button>
             </div>
         </form>
     </div>
@@ -206,7 +212,7 @@ $paginacion = $resultado['paginacion'];
 <div class="modal-overlay" id="modalView">
     <div class="modal-nx" style="max-width: 480px">
         <div class="modal-header-nx">
-            <h3 class="modal-title-nx">ver empresa</h3>
+            <h3 class="modal-title-nx">Ver empresa</h3>
             <button class="modal-close" onclick="closeModal('modalView')">
                 <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -221,44 +227,44 @@ $paginacion = $resultado['paginacion'];
             <div class="row g-3">
                 <div class="col-6">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">nit</label>
+                        <label class="form-label-nx">NIT</label>
                         <div id="view_nit">-</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">celular</label>
+                        <label class="form-label-nx">Celular</label>
                         <div id="view_celular">-</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">comision</label>
+                        <label class="form-label-nx">Comisión</label>
                         <div id="view_comision">-</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">creado por</label>
+                        <label class="form-label-nx">Creado por</label>
                         <div id="view_usuario">-</div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">fecha de creacion</label>
+                        <label class="form-label-nx">Fecha de creación</label>
                         <div id="view_fecha">-</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group-nx">
-                        <label class="form-label-nx">estado</label>
+                        <label class="form-label-nx">Estado</label>
                         <div id="view_estado">-</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer-nx">
-            <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalView')">cerrar</button>
+            <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalView')">Cerrar</button>
         </div>
     </div>
 </div>
@@ -267,7 +273,7 @@ $paginacion = $resultado['paginacion'];
 <div class="modal-overlay" id="modalConfirm">
     <div class="modal-nx" style="max-width: 420px">
         <div class="modal-header-nx">
-            <h3 class="modal-title-nx">eliminar empresa</h3>
+            <h3 class="modal-title-nx">Eliminar empresa</h3>
             <button class="modal-close" onclick="closeModal('modalConfirm')">
                 <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -276,11 +282,11 @@ $paginacion = $resultado['paginacion'];
             <div class="modal-body-nx">
                 <input type="hidden" name="eliminar_empresa" value="1">
                 <input type="hidden" name="id" id="delete_id">
-                <p>esta seguro de eliminar esta empresa? esta accion no se puede deshacer.</p>
+                <p>¿Está seguro de eliminar esta empresa? Esta acción no se puede deshacer.</p>
             </div>
             <div class="modal-footer-nx">
-                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalConfirm')">cancelar</button>
-                <button type="submit" class="btn-nx btn-danger btn-md">eliminar</button>
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalConfirm')">Cancelar</button>
+                <button type="submit" class="btn-nx btn-danger btn-md">Eliminar</button>
             </div>
         </form>
     </div>
@@ -290,7 +296,7 @@ $paginacion = $resultado['paginacion'];
 <div class="modal-overlay" id="modalDesactivar">
     <div class="modal-nx" style="max-width: 420px">
         <div class="modal-header-nx">
-            <h3 class="modal-title-nx">desactivar empresa</h3>
+            <h3 class="modal-title-nx">Desactivar empresa</h3>
             <button class="modal-close" onclick="closeModal('modalDesactivar')">
                 <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -299,11 +305,34 @@ $paginacion = $resultado['paginacion'];
             <div class="modal-body-nx">
                 <input type="hidden" name="desactivar_empresa" value="1">
                 <input type="hidden" name="id" id="desactivar_id">
-                <p>esta seguro de desactivar esta empresa? podra reactivarla mas adelante.</p>
+                <p>¿Está seguro de desactivar esta empresa? Podrá reactivarla más adelante.</p>
             </div>
             <div class="modal-footer-nx">
-                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalDesactivar')">cancelar</button>
-                <button type="submit" class="btn-nx btn-warning btn-md">desactivar</button>
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalDesactivar')">Cancelar</button>
+                <button type="submit" class="btn-nx btn-warning btn-md">Desactivar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- modal activar -->
+<div class="modal-overlay" id="modalActivar">
+    <div class="modal-nx" style="max-width: 420px">
+        <div class="modal-header-nx">
+            <h3 class="modal-title-nx">Activar empresa</h3>
+            <button class="modal-close" onclick="closeModal('modalActivar')">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <form class="FormularioAjax" action="<?php echo SERVER_URL; ?>ajax/empresaAjax.php" method="POST" data-form="delete" autocomplete="off">
+            <div class="modal-body-nx">
+                <input type="hidden" name="activar_empresa" value="1">
+                <input type="hidden" name="id" id="activar_id">
+                <p>¿Está seguro de activar esta empresa? Estará disponible para su uso.</p>
+            </div>
+            <div class="modal-footer-nx">
+                <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalActivar')">Cancelar</button>
+                <button type="submit" class="btn-nx btn-success btn-md">Activar</button>
             </div>
         </form>
     </div>
@@ -359,5 +388,10 @@ $paginacion = $resultado['paginacion'];
     function desactivarEmpresa(id) {
         document.getElementById('desactivar_id').value = id;
         openModal('modalDesactivar');
+    }
+
+    function activarEmpresa(id) {
+        document.getElementById('activar_id').value = id;
+        openModal('modalActivar');
     }
 </script>

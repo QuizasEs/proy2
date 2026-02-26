@@ -4,13 +4,13 @@
           <ion-icon name="menu-outline" id="sidebarToggleIcon"></ion-icon>
         </button>
 
-        <div class="navbar-search">
+        <!-- <div class="navbar-search">
           <ion-icon name="search-outline"></ion-icon>
           <input type="text" placeholder="Buscar en el sistema..." />
-        </div>
+        </div> -->
 
         <div class="navbar-actions">
-          <button class="navbar-btn" title="Notificaciones" onclick="
+          <!-- <button class="navbar-btn" title="Notificaciones" onclick="
                 showToast(
                   'info',
                   'Notificaciones',
@@ -19,7 +19,7 @@
               ">
             <ion-icon name="notifications-outline"></ion-icon>
             <span class="navbar-notif-dot"></span>
-          </button>
+          </button> -->
 <!--           <button class="navbar-btn" title="Mensajes">
             <ion-icon name="chatbubble-outline"></ion-icon>
           </button> -->

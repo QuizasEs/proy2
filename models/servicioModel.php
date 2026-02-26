@@ -135,4 +135,18 @@ class servicioModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------activar servicio----------------------------------- */
+    protected static function activar_servicio_modelo($id)
+    {
+        $sql = mainModel::conectar()->prepare("
+        UPDATE servicios SET
+            se_estado = 1,
+            se_actualizado_en = NOW()
+        WHERE se_id = :id
+        ");
+        $sql->bindParam(":id", $id);
+        $sql->execute();
+        return $sql;
+    }
 }

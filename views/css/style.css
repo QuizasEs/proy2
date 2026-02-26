@@ -43,7 +43,7 @@
     --color-border-strong: #cbd5e1;
     --color-text: #0f172a;
     --color-text-secondary: #475569;
-    --color-text-muted: #94a3b8;
+    --color-text-muted: #464e5a;
     --color-text-invert: #ffffff;
 
     /* sidebar */
@@ -139,7 +139,7 @@
     --color-border-strong: #2a4272;
     --color-text: #e2e8f0;
     --color-text-secondary: #94a3b8;
-    --color-text-muted: #475569;
+    --color-text-muted: #c2c2c2;
     --color-text-invert: #0f172a;
 
     --navbar-bg: #0d1829;
@@ -587,7 +587,7 @@ a:hover {
 .sidebar-footer-avatar {
     width: 30px;
     height: 30px;
-    border-radius: var(--radius-md);
+    border-radius: 50%;
     background: var(--blue-500);
     display: flex;
     align-items: center;
@@ -753,7 +753,7 @@ a:hover {
 .navbar-avatar {
     width: 32px;
     height: 32px;
-    border-radius: var(--radius-md);
+    border-radius: 50%;
     background: var(--blue-500);
     display: flex;
     align-items: center;
@@ -865,7 +865,7 @@ a:hover {
 }
 
 .text-muted {
-    color: var(--color-text-muted) !important;
+    color: var(--color-text-muted) ;
 }
 
 .text-mono {
@@ -1389,7 +1389,7 @@ a:hover {
 .entity-avatar {
     width: 28px;
     height: 28px;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     background: var(--blue-600);
     display: flex;
     align-items: center;
@@ -2200,9 +2200,11 @@ select.form-control-nx {
 /* login layout */
 .login-layout {
     display: flex;
-    width: 100vw;
-    height: 100vh;
-    background: var(--blue-600);
+    flex-direction: row-reverse;
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    background: #1a1a2e;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -2210,126 +2212,141 @@ select.form-control-nx {
 
 /* left side login form */
 .login-left {
-    flex: 0 0 30%;
-    width: 30%;
+    flex: 0 0 450px;
+    width: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--blue-600);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     padding: 0;
+    position: relative;
+    z-index: 10;
 }
 
 .login-form-container {
-    width: 85%;
-    max-width: 400px;
-    background: var(--color-surface);
-    padding: var(--space-16) var(--space-12);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 350px;
+    padding: 40px;
     text-align: center;
-    border: 1px solid var(--color-border);
-    transition: box-shadow var(--transition-base);
+    /* Animación de entrada */
+    animation: fadeInUp 0.5s ease forwards;
 }
 
 .login-form-container:hover {
-    box-shadow: var(--shadow-xl);
+    box-shadow: none;
 }
 
 .login-title {
-    color: var(--color-primary);
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-16);
-    font-weight: var(--fw-bold);
-    letter-spacing: -0.02em;
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .form-group {
-    margin-bottom: var(--space-10);
+    margin-bottom: 20px;
     text-align: left;
 }
 
 .form-label {
     display: block;
-    margin-bottom: var(--space-4);
-    color: var(--color-primary);
-    font-weight: var(--fw-semi);
-    font-size: var(--text-xs);
+    margin-bottom: 8px;
+    color: #a0a0a0;
+    font-weight: 600;
+    font-size: 0.85rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 1px;
 }
 
 .form-group input {
     width: 100%;
-    padding: var(--space-5);
-    background: var(--color-surface-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-base);
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 1rem;
     font-family: 'Sora', sans-serif;
-    color: var(--color-text);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input::placeholder {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    background: var(--color-surface);
+    border-color: #4a90d9;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.2);
 }
 
 .login-button {
     width: 100%;
-    padding: var(--space-6) var(--space-5);
-    background: var(--color-primary);
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #4a90d9 0%, #357abd 100%);
     color: #ffffff;
     border: none;
-    border-radius: var(--radius-md);
-    font-size: var(--text-md);
-    font-weight: var(--fw-bold);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
     font-family: 'Sora', sans-serif;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .login-button:hover {
-    background: var(--color-primary-hover);
-    box-shadow: var(--shadow-blue);
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #5a9fe9 0%, #4589cd 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 217, 0.4);
 }
 
 .login-button:active {
-    background: var(--color-primary-active);
+    background: linear-gradient(135deg, #4a90d9 0%, #357abd 100%);
     transform: translateY(0);
 }
 
 .form-footer {
-    margin-top: var(--space-10);
+    margin-top: 10px;
 }
 
 .forgot-password {
-    color: var(--color-primary);
+    color: #a0a0a0;
     text-decoration: none;
-    font-size: var(--text-sm);
-    font-weight: var(--fw-medium);
-    transition: color var(--transition-fast);
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
-    color: var(--color-primary-hover);
-    text-decoration: underline;
+    color: #4a90d9;
+    text-decoration: none;
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* right side carousel */
 .login-right {
-    flex: 0 0 70%;
-    width: 70%;
+    flex: 1;
     position: relative;
     overflow: hidden;
 }
@@ -2348,6 +2365,9 @@ select.form-control-nx {
     height: 100%;
     opacity: 0;
     transition: opacity 1500ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-item.active {
@@ -2373,35 +2393,37 @@ select.form-control-nx {
 }
 
 .carousel-title {
-    font-size: var(--text-4xl);
-    font-weight: var(--fw-bold);
-    margin-bottom: var(--space-8);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
+    text-transform: uppercase;
 }
 
 .carousel-subtitle {
-    font-size: var(--text-lg);
-    font-weight: var(--fw-light);
+    font-size: 2.25rem;
+    font-weight: 500;
+    text-transform: uppercase;
     opacity: 0.95;
 }
 
 .carousel-controls {
     position: absolute;
-    bottom: var(--space-12);
+    bottom: 2.25rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: var(--space-6);
+    gap: 1.125rem;
     z-index: 20;
 }
 
 .carousel-dot {
     width: 10px;
     height: 10px;
-    border-radius: var(--radius-full);
+    border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .carousel-dot:hover {
@@ -2411,60 +2433,95 @@ select.form-control-nx {
 
 .carousel-dot.active {
     background-color: #ffffff;
+    transform: scale(1.2);
 }
 
 @media (max-width: 1024px) {
     .login-left {
-        flex: 0 0 40%;
-        width: 40%;
+        flex: 0 0 400px;
+        width: 400px;
     }
 
     .login-right {
-        flex: 0 0 60%;
-        width: 60%;
+        flex: 1;
     }
 
     .carousel-title {
-        font-size: var(--text-3xl);
+        font-size: 2.25rem;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .login-layout {
         flex-direction: column;
         overflow-y: auto;
-        background: var(--color-bg);
+        background: #1a1a2e;
+        height: 100vh;
     }
 
     .login-left {
         order: 2;
         width: 100%;
+        flex: none;
         min-height: 60vh;
-        padding: var(--space-10) 0;
-        background: var(--color-bg);
+        padding: 2rem 0;
     }
 
     .login-form-container {
         width: 90%;
         max-width: none;
-        padding: var(--space-12) var(--space-8);
+        padding: 30px 20px;
+    }
+
+    .login-title {
+        font-size: 1.5rem;
     }
 
     .login-right {
         order: 1;
         width: 100%;
-        height: 40vh;
+        height: 35vh;
+        min-height: 250px;
+        flex: none;
+    }
+
+    .carousel-container {
+        height: 100%;
+        min-height: 250px;
     }
 
     .carousel-title {
-        font-size: var(--text-xl);
+        font-size: 1.5rem;
     }
 
     .carousel-subtitle {
-        font-size: var(--text-base);
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-left {
+        min-height: 65vh;
     }
 
-    .carousel-controls {
-        bottom: var(--space-6);
+    .login-right {
+        height: 25vh;
+        min-height: 180px;
+    }
+
+    .login-form-container {
+        padding: 25px 15px;
+    }
+
+    .login-title {
+        font-size: 1.3rem;
+    }
+
+    .form-group input {
+        padding: 12px 14px;
+    }
+
+    .login-button {
+        padding: 12px 20px;
     }
 }

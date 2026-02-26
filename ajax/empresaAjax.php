@@ -2,7 +2,7 @@
 $peticionAjax = true;
 require_once "../config/APP.php";
 
-if (isset($_POST['agregar_empresa']) || isset($_POST['actualizar_empresa']) || isset($_POST['eliminar_empresa']) || isset($_POST['obtener_empresa']) || isset($_POST['desactivar_empresa'])) {
+if (isset($_POST['agregar_empresa']) || isset($_POST['actualizar_empresa']) || isset($_POST['eliminar_empresa']) || isset($_POST['obtener_empresa']) || isset($_POST['desactivar_empresa']) || isset($_POST['activar_empresa'])) {
     require_once "../controllers/empresaController.php";
     $ins_empresa = new empresaController();
 
@@ -14,6 +14,8 @@ if (isset($_POST['agregar_empresa']) || isset($_POST['actualizar_empresa']) || i
         echo $ins_empresa->eliminar_empresa_controller();
     } elseif (isset($_POST['desactivar_empresa'])) {
         echo $ins_empresa->desactivar_empresa_controller();
+    } elseif (isset($_POST['activar_empresa'])) {
+        echo $ins_empresa->activar_empresa_controller();
     } elseif (isset($_POST['obtener_empresa'])) {
         $datos = $ins_empresa->obtener_empresa_controller($_POST['id']);
         echo json_encode($datos->fetch());

@@ -191,4 +191,18 @@ class habilitacionModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------activar habilitacion----------------------------------- */
+    protected static function activar_habilitacion_modelo($id)
+    {
+        $sql = mainModel::conectar()->prepare("
+        UPDATE habilitaciones SET
+            ha_estado = 1,
+            ha_actualizado_en = NOW()
+        WHERE ha_id = :id
+        ");
+        $sql->bindParam(":id", $id);
+        $sql->execute();
+        return $sql;
+    }
 }

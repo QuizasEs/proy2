@@ -36,43 +36,43 @@
                 <div class="login-right">
                     <div class="carousel-container">
                         <div class="carousel-item active">
-                            <img src="<?php echo SERVER_URL; ?>views/image/background-logo.png" alt="Welcome" class="carousel-image">
+                            <img src="<?php echo SERVER_URL; ?>image/hero1.jpg" alt="Welcome" class="carousel-image">
                             <div class="carousel-overlay">
                                 <h3 class="carousel-title">BIENVENIDO AL SISTEMA</h3>
-                                <p class="carousel-subtitle">Sistema de Gestión Farmacéutica</p>
+                                <p class="carousel-subtitle">Planeación</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo SERVER_URL; ?>views/image/injectable.jpeg" alt="Injectable" class="carousel-image">
+                            <img src="<?php echo SERVER_URL; ?>image/hero2.jpg" alt="Injectable" class="carousel-image">
                             <div class="carousel-overlay">
                                 <h3 class="carousel-title">BIENVENIDO AL SISTEMA</h3>
-                                <p class="carousel-subtitle">Sistema de Gestión Farmacéutica</p>
+                                <p class="carousel-subtitle">Organización</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo SERVER_URL; ?>views/image/parche.jpg" alt="Patch" class="carousel-image">
+                            <img src="<?php echo SERVER_URL; ?>image/hero3.jpg" alt="Patch" class="carousel-image">
                             <div class="carousel-overlay">
                                 <h3 class="carousel-title">BIENVENIDO AL SISTEMA</h3>
-                                <p class="carousel-subtitle">Sistema de Gestión Farmacéutica</p>
+                                <p class="carousel-subtitle">Dirección</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="<?php echo SERVER_URL; ?>views/image/vita.jpg" alt="Vita" class="carousel-image">
+                            <img src="<?php echo SERVER_URL; ?>image/hero4.jpg" alt="Vita" class="carousel-image">
                             <div class="carousel-overlay">
                                 <h3 class="carousel-title">BIENVENIDO AL SISTEMA</h3>
-                                <p class="carousel-subtitle">Sistema de Gestión Farmacéutica</p>
+                                <p class="carousel-subtitle">Control</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <script>
-                // Carousel functionality
+                // funcion de carrusel
                 let currentSlide = 0;
                 const slides = document.querySelectorAll('.carousel-item');
                 const dots = [];
                 
-                // Create dots
+                // dots
                 const carouselContainer = document.querySelector('.carousel-container');
                 const controlsContainer = document.createElement('div');
                 controlsContainer.className = 'carousel-controls';
@@ -87,14 +87,15 @@
                 
                 carouselContainer.appendChild(controlsContainer);
                 
-                // Update active dot
+                // actualizar dot
                 function updateDots() {
                     dots.forEach((dot, index) => {
                         dot.classList.toggle('active', index === currentSlide);
                     });
                 }
                 
-                // Go to specific slide
+                // ir a especifico dot
+
                 function goToSlide(index) {
                     slides.forEach(slide => slide.classList.remove('active'));
                     slides[index].classList.add('active');
@@ -102,19 +103,20 @@
                     updateDots();
                 }
                 
-                // Next slide
+                // siguiente slider
                 function nextSlide() {
                     const nextIndex = (currentSlide + 1) % slides.length;
                     goToSlide(nextIndex);
                 }
                 
-                // Initialize
+                // iniciador
                 updateDots();
                 
-                // Auto-advance every 20 seconds
+                // 20 segundos entre imagen
                 setInterval(nextSlide, 20000);
                 
-                // Form submission
+                // formulario emergente
+
                 document.querySelector('.login-form').addEventListener('submit', function(e) {
                     e.preventDefault();
                     

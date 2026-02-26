@@ -19,8 +19,8 @@ class servicioController extends servicioModel
         if ($nombre == "" || $tipo_sistema == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -39,8 +39,8 @@ class servicioController extends servicioModel
         if ($agregar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "servicio registrado",
-                "texto" => "el servicio se ha registrado exitosamente!",
+                "Titulo" => "Servicio registrado",
+                "texto" => "El servicio se ha registrado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -48,8 +48,8 @@ class servicioController extends servicioModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se ha podido registrar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se ha podido registrar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -106,8 +106,8 @@ class servicioController extends servicioModel
         if ($id == "" || $nombre == "" || $tipo_sistema == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -126,8 +126,8 @@ class servicioController extends servicioModel
         if ($actualizar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "servicio actualizado",
-                "texto" => "el servicio se ha actualizado exitosamente!",
+                "Titulo" => "Servicio actualizado",
+                "texto" => "El servicio se ha actualizado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -135,8 +135,8 @@ class servicioController extends servicioModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se ha podido actualizar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se ha podido actualizar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -153,7 +153,7 @@ class servicioController extends servicioModel
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Acceso denegado",
-                "texto" => "no tienes permisos para eliminar servicios!",
+                "texto" => "No tienes permisos para eliminar servicios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -165,8 +165,8 @@ class servicioController extends servicioModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -178,8 +178,8 @@ class servicioController extends servicioModel
         if ($eliminar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "servicio eliminado",
-                "texto" => "el servicio se ha eliminado exitosamente!",
+                "Titulo" => "Servicio eliminado",
+                "texto" => "El servicio se ha eliminado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -187,8 +187,8 @@ class servicioController extends servicioModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -203,8 +203,8 @@ class servicioController extends servicioModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -216,8 +216,8 @@ class servicioController extends servicioModel
         if ($desactivar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "servicio desactivado",
-                "texto" => "el servicio se ha desactivado exitosamente!",
+                "Titulo" => "Servicio desactivado",
+                "texto" => "El servicio se ha desactivado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -225,8 +225,47 @@ class servicioController extends servicioModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar el servicio!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar el servicio!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para activar servicio------------------------------------------ */
+    public function activar_servicio_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar el servicio!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $activar = servicioModel::activar_servicio_modelo($id);
+
+        if ($activar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "Servicio activado",
+                "texto" => "El servicio se ha activado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar el servicio!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);

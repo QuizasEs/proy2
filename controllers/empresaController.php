@@ -21,8 +21,8 @@ class empresaController extends empresaModel
         if ($nombre == "" || $nit == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -34,8 +34,8 @@ class empresaController extends empresaModel
         if ($check_nit->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "el nit ya se encuentra registrado!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "El NIT ya se encuentra registrado!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -55,8 +55,8 @@ class empresaController extends empresaModel
         if ($agregar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "empresa registrada",
-                "texto" => "la empresa se ha registrado exitosamente!",
+                "Titulo" => "Empresa registrada",
+                "texto" => "La empresa se ha registrado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -64,8 +64,8 @@ class empresaController extends empresaModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se ha podido registrar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se ha podido registrar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -125,8 +125,8 @@ class empresaController extends empresaModel
         if ($id == "" || $nombre == "" || $nit == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se han llenado todos los campos obligatorios!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se han llenado todos los campos obligatorios!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -138,8 +138,8 @@ class empresaController extends empresaModel
         if ($check_nit->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "el nit ya se encuentra registrado!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "El NIT ya se encuentra registrado!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -159,8 +159,8 @@ class empresaController extends empresaModel
         if ($actualizar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "empresa actualizada",
-                "texto" => "los datos de la empresa se han actualizado exitosamente!",
+                "Titulo" => "Empresa actualizada",
+                "texto" => "Los datos de la empresa se han actualizado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -168,8 +168,8 @@ class empresaController extends empresaModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo actualizar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo actualizar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -187,7 +187,7 @@ class empresaController extends empresaModel
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Acceso denegado",
-                "texto" => "no tienes permisos para eliminar empresas!",
+                "texto" => "No tienes permisos para eliminar empresas!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -199,8 +199,8 @@ class empresaController extends empresaModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -212,8 +212,8 @@ class empresaController extends empresaModel
         if ($eliminar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "empresa eliminada",
-                "texto" => "la empresa se ha eliminado exitosamente!",
+                "Titulo" => "Empresa eliminada",
+                "texto" => "La empresa se ha eliminado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -221,8 +221,8 @@ class empresaController extends empresaModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo eliminar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo eliminar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -238,8 +238,8 @@ class empresaController extends empresaModel
         if ($id == "") {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -251,8 +251,8 @@ class empresaController extends empresaModel
         if ($desactivar->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "recargar",
-                "Titulo" => "empresa desactivada",
-                "texto" => "la empresa se ha desactivado exitosamente!",
+                "Titulo" => "Empresa desactivada",
+                "texto" => "La empresa se ha desactivado exitosamente!",
                 "Tipo" => "success"
             ];
             echo json_encode($alerta);
@@ -260,8 +260,47 @@ class empresaController extends empresaModel
         } else {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "ocurrio un error inesperado",
-                "texto" => "no se pudo desactivar la empresa!",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo desactivar la empresa!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+
+    /* -----------------------------------controlador para activar empresa------------------------------------------ */
+    public function activar_empresa_controller()
+    {
+        $id = mainModel::decryption($_POST['id']);
+
+        if ($id == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar la empresa!",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $activar = empresaModel::activar_empresa_modelo($id);
+
+        if ($activar->rowCount() == 1) {
+            $alerta = [
+                "Alerta" => "recargar",
+                "Titulo" => "Empresa activada",
+                "texto" => "La empresa se ha activado exitosamente!",
+                "Tipo" => "success"
+            ];
+            echo json_encode($alerta);
+            exit();
+        } else {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "texto" => "No se pudo activar la empresa!",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);

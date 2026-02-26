@@ -206,7 +206,7 @@ $lista_roles = $ins_personal->listar_roles_controller();
             </div>
             <div class="modal-footer-nx">
                 <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalAdd')">Cancelar</button>
-                <button type="submit" class="btn-nx btn-primary btn-md">Guardar</button>
+                <button type="submit" class="btn-nx btn-success btn-md">Guardar</button>
             </div>
         </form>
     </div>
@@ -306,7 +306,7 @@ $lista_roles = $ins_personal->listar_roles_controller();
             </div>
             <div class="modal-footer-nx">
                 <button type="button" class="btn-nx btn-danger btn-md" onclick="closeModal('modalEdit')">Cancelar</button>
-                <button type="submit" class="btn-nx btn-primary btn-md">Actualizar</button>
+                <button type="submit" class="btn-nx btn-success btn-md">Actualizar</button>
             </div>
         </form>
     </div>

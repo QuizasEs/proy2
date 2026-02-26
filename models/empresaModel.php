@@ -147,4 +147,18 @@ class empresaModel extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    /* -------------------------------activar empresa----------------------------------- */
+    protected static function activar_empresa_modelo($id)
+    {
+        $sql = mainModel::conectar()->prepare("
+        UPDATE empresas SET
+            em_estado = 1,
+            em_actualizado_en = NOW()
+        WHERE em_id = :id
+        ");
+        $sql->bindParam(":id", $id);
+        $sql->execute();
+        return $sql;
+    }
 }

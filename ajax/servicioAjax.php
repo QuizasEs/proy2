@@ -32,6 +32,13 @@ if (isset($_POST['desactivar_servicio']) && isset($_POST['id'])) {
     exit();
 }
 
+if (isset($_POST['activar_servicio']) && isset($_POST['id'])) {
+    require_once "../controllers/servicioController.php";
+    $ins_servicio = new servicioController();
+    echo $ins_servicio->activar_servicio_controller();
+    exit();
+}
+
 if (isset($_POST['obtener_servicio']) && isset($_POST['id'])) {
     require_once "../controllers/servicioController.php";
     $ins_servicio = new servicioController();
@@ -43,7 +50,7 @@ if (isset($_POST['obtener_servicio']) && isset($_POST['id'])) {
 
 $alerta = [
     "Alerta" => "simple",
-    "Titulo" => "ocurrio un error inesperado",
+    "Titulo" => "Ocurrio un error inesperado",
     "texto" => "no se pudo procesar la solicitud!",
     "Tipo" => "error"
 ];
